@@ -20,8 +20,10 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.ContextMenu;
@@ -48,46 +50,41 @@ import android.widget.SimpleAdapter.ViewBinder;
 public class RelatorioFinanceiro extends Activity implements
 		OnItemClickListener {
 
+	public static final String EXTRA_NOME_USUARIO = "AppSolucaoSistemas.EXTRA_NOME_USUARIO";
 	private ListView lista;
-
 	private DatabaseHelper db;
 	private List<Map<String, String>> produtos;
-
 	private TextView txtttdespesa;
 	private TextView txtttreceita;
-	private TextView txtsaldo;
-	private String filtro;
-	String dtini;
-	String dtfim;
-	String categoria1;
-	String situacao;
-	String ds_tipo;
+	private TextView txtsaldo;	
 	private Date dt_ini, dt_fim, dt_aux;
-
 	private String strsql;
-
-	public static final String EXTRA_NOME_USUARIO = "AppSolucaoSistemas.EXTRA_NOME_USUARIO";
+	private String filtro;
+	private String dtini;
+	private String dtfim;
+	private String categoria1;
+	private String situacao;
+	private String ds_tipo;	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_relatoriofinanceiro);
+		
 		lista = (ListView) findViewById(R.id.listarelatfin);
 		txtttdespesa = (TextView) findViewById(R.id.txtttdespesa);
 		txtttreceita = (TextView) findViewById(R.id.txtttreceita);
 		txtsaldo = (TextView) findViewById(R.id.txtsaldo);
 
-		db = new DatabaseHelper(this);
-
 		lista.setOnItemClickListener(this);
 		registerForContextMenu(lista);
+		
+		db = new DatabaseHelper(this);
 
 		Intent intent = getIntent();
 		if (intent.hasExtra(EXTRA_NOME_USUARIO)) {
-
 			filtro = intent.getStringExtra(EXTRA_NOME_USUARIO);
 			buscarrelat();
-
 		}
 
 	}
@@ -129,7 +126,6 @@ public class RelatorioFinanceiro extends Activity implements
 
 		switch (item.getItemId()) {
 		case R.id.remover_despesarec:
-
 			cd_lancamento = produtos.get(info.position).get("cd_lancamento");
 			cd_lancamento = cd_lancamento.substring(0,
 					cd_lancamento.indexOf("-"));
@@ -138,10 +134,11 @@ public class RelatorioFinanceiro extends Activity implements
 
 			db.getWritableDatabase().execSQL(
 					"delete from financas where _id =" + cd_lancamento);
-
+			buscarrelat();
+			
 			return true;
+			
 		case R.id.realiza_pagamento:
-
 			cd_lancamento = produtos.get(info.position).get("cd_lancamento");
 			cd_lancamento = cd_lancamento.substring(0,
 					cd_lancamento.indexOf("-"));
@@ -151,19 +148,18 @@ public class RelatorioFinanceiro extends Activity implements
 			db.getWritableDatabase().execSQL(
 					"update financas  set ds_situacao ='P' where _id ="
 							+ cd_lancamento);
-			return true;
-		
+			buscarrelat();
+			
+			return true;		
 			
 		case R.id.editar_lancamento:
-
 			Intent intent = new Intent(this, LancaDespesa.class);
 			cd_lancamento = produtos.get(info.position).get("cd_lancamento");
 			cd_lancamento = cd_lancamento.substring(0,cd_lancamento.indexOf("-"));
 			intent.putExtra(LancaDespesa.EXTRA_CD_LANCAMENTO, cd_lancamento);
 			startActivity(intent);		
 			
-			return true;
-			
+			return true;			
 			
 		default:
 			return super.onContextItemSelected(item);
@@ -230,17 +226,14 @@ public class RelatorioFinanceiro extends Activity implements
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
 
 		while (c.moveToNext()) {
-			Map<String, String> mapa = new HashMap<String, String>();
-
-			
-			
+			Map<String, String> mapa = new HashMap<String, String>();			
 			
 			strsql =c.getString(0);
 			mapa.put("cd_lancamento", c.getString(0) + "-");
 			
 			dt_aux = new Date(c.getLong(1));
 			strsql = dateFormat.format(dt_aux);
-			mapa.put("dt_lancamento","Data Lanc.: "+ dateFormat.format(dt_aux));
+			mapa.put("dt_lancamento","Data: "+ dateFormat.format(dt_aux));
 			
 
 			if (c.getDouble(2) > 0) {
@@ -255,7 +248,7 @@ public class RelatorioFinanceiro extends Activity implements
 			dt_aux = new Date(c.getLong(6));
 			if (c.getLong(1) != c.getLong(6)) //caso o vencimento seja diferente da data de lançamento quer dizer que é um lançamento a vencer
 			{
-			  mapa.put("dt_vencimento",dateFormat.format(dt_aux));
+			  mapa.put("dt_vencimento","Venc.:  "+ dateFormat.format(dt_aux));
 			} else mapa.put("dt_vencimento","");
 			
 			if (c.getString(7).toString().equals("A"))
@@ -300,10 +293,17 @@ public class RelatorioFinanceiro extends Activity implements
 
 		Cursor ct = db.getReadableDatabase().rawQuery(strsql, null);
 		ct.moveToFirst();
+		
 
-		txtttdespesa.setText(df.format(ct.getDouble(0)));
-		txtttreceita.setText(df.format(ct.getDouble(1)));
+		txtttdespesa.setText(df.format(ct.getDouble(0)));		
+		txtttreceita.setText(df.format(ct.getDouble(1)));		
 		txtsaldo.setText(df.format(ct.getDouble(1) - ct.getDouble(0)));
+		if((ct.getDouble(1) - ct.getDouble(0)) >= 0.00){
+			txtsaldo.setTextColor(Color.BLUE);
+		}
+		else
+			txtsaldo.setTextColor(Color.RED);
+		
 		ct.close();
 		// construir objeto de retorno que é uma String[]
 		return produtos;
@@ -319,7 +319,7 @@ public class RelatorioFinanceiro extends Activity implements
 	
 	public void lancaDespesa(View view)
 	{
-		this.finish();
+//		this.finish();
 		startActivity(new Intent(this, LancaDespesa.class));
 	}
 	
@@ -335,4 +335,9 @@ public class RelatorioFinanceiro extends Activity implements
 
 	}
 
+	@Override
+	public void onResume(){
+	    super.onResume();
+	    buscarrelat();
+	}
 }

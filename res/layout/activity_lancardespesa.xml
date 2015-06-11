@@ -15,27 +15,36 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Descrição do Lancamento"
-                android:textStyle="bold" 
-                />
-
-            <EditText
-                android:id="@+id/edthistorico"
+            <TableRow
+                android:id="@+id/tableRow1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textMultiLine"
-               
-                           
-                >
+                android:layout_height="wrap_content" >
+                
+	            <TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="Descrição do Lancamento"
+	                android:textStyle="bold" 
+	                />
+	         
+	         </TableRow>
 
-                <requestFocus android:layout_width="wrap_content" />
-
-            </EditText>
+             <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+	            <EditText
+	                android:id="@+id/edthistorico"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:ems="10"
+	                android:inputType="textMultiLine" >
+	                <requestFocus android:layout_width="wrap_content" />
+	
+	            </EditText>
+            
+            </TableRow>
 
             <TextView
                 android:id="@+id/textView2"
@@ -98,7 +107,7 @@
                 android:text="" />
 
             <TableRow
-                android:id="@+id/tableRow1"
+                android:id="@+id/tableRow5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
@@ -112,7 +121,7 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/tableRow5"
+                android:id="@+id/tableRow6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
@@ -133,9 +142,13 @@
             
             <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                 >
+                android:layout_height="wrap_content" >
           
+            <TableRow
+                android:id="@+id/tableRow7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+	                
 	            <TextView
 	                android:id="@+id/textView10"
 	                android:layout_width="wrap_content"
@@ -143,6 +156,8 @@
 	                android:layout_weight="1.8"
 	                android:text="Tipo do Lancamento"
 	                android:textStyle="bold" />
+	            
+	         </TableRow>
 	            
 				<TableRow
 	                android:id="@+id/tableRow8"
@@ -152,25 +167,27 @@
 		            <RadioGroup
 		                android:id="@+id/rgreceitadespesa"
 		                android:layout_width="match_parent"
-		                android:layout_height="wrap_content"
+		                android:layout_height="match_parent"
+		                android:layout_weight="0.5"
 		                android:background="@color/branco"
-		                android:onClick="selecionarTipo"
 		                android:orientation="horizontal" >
 		
 		                <RadioButton
 		                    android:id="@+id/rgdespesa"
 		                    android:layout_width="wrap_content"
 		                    android:layout_height="wrap_content"
-		                    android:layout_weight="0.4"
-		                    android:checked="true"
+		                    android:layout_weight="0.5"
+		                    android:onClick="selecionarTipo"
 		                    android:text="(-) Pagamento" />
 		
 		                <RadioButton
 		                    android:id="@+id/rgreceita"
 		                    android:layout_width="wrap_content"
 		                    android:layout_height="wrap_content"
-		                    android:layout_weight="0.6"
+		                    android:layout_weight="0.5"
+		                    android:onClick="selecionarTipo"
 		                    android:text="(+) Recebimento" />
+
 		            </RadioGroup>
 				</TableRow>
             </TableLayout>
@@ -185,10 +202,10 @@
                 android:id="@+id/tl_situacao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                 >
+                android:visibility="invisible" >
 
                 <TableRow
-                    android:id="@+id/tableRow6"
+                    android:id="@+id/tableRow9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
@@ -202,14 +219,15 @@
                 </TableRow>            
 
             <TableRow
-                android:id="@+id/tableRow7"
+                android:id="@+id/tableRow10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
                 <RadioGroup
                     android:id="@+id/rgsituacao"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.5"
                     android:background="@color/branco"
                     android:orientation="horizontal" >
 
@@ -218,7 +236,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:checked="true"
+                        android:onClick="selecionarSituacao"
                         android:text="Pago" />
 
                     <RadioButton
@@ -226,6 +244,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
+                        android:onClick="selecionarSituacao"
                         android:text="A Pagar" />
                 </RadioGroup>
             </TableRow>
@@ -240,27 +259,40 @@
            <TableLayout
                android:id="@+id/tl_vencimento"
                android:layout_width="match_parent"
-               android:layout_height="wrap_content" >
-
-               <TextView
-                   android:id="@+id/textView12"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="0.5"
-                   android:text="Data Vencimento"
-                   android:textStyle="bold" />
+               android:layout_height="wrap_content"
+               android:visibility="invisible" >
 
                <TableRow
-                   android:id="@+id/tableRow9"
+                   android:id="@+id/tableRow11"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content" >
+                
+	               <TextView
+	                   android:id="@+id/textView12"
+	                   android:layout_width="wrap_content"
+	                   android:layout_height="wrap_content"
+	                   android:layout_weight="0.1"
+	                   android:gravity="center"
+	                   android:text="Data Vencimento"
+	                   android:textStyle="bold" />
+					
+			    </TableRow>
+			    
+               <TableRow
+                   android:id="@+id/tableRow12"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                    >
 
                    <Button
                        android:id="@+id/btdtvenciento"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+                       android:layout_gravity="center"
+                       android:layout_weight="0.1"
                        android:onClick="selecionarDataVencimento"
                        android:text="01/01/2000" />
+
                </TableRow>
            </TableLayout>
 
@@ -272,7 +304,7 @@
            
            		
 	            <TableRow
-	                android:id="@+id/tableRow10"
+	                android:id="@+id/tableRow13"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content" >
 	            

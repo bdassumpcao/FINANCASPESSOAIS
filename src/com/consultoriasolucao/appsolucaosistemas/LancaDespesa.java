@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -60,6 +61,8 @@ public class LancaDespesa extends Activity {
     private RadioButton rgsituacaoapagar;
     private RadioButton rgreceita;
     private RadioButton rgdespesa;
+    private TableLayout tl_situacao;
+    private TableLayout tl_vencimento;
     private String straux;
 
     
@@ -74,8 +77,12 @@ public class LancaDespesa extends Activity {
 		this.edthistorico = (EditText) findViewById(R.id.edthistorico);
 		this.radioGroup = (RadioGroup) findViewById(R.id.rgsituacao);
 		this.rgreceitadespesa = (RadioGroup) findViewById(R.id.rgreceitadespesa);
+		this.tl_situacao = (TableLayout) findViewById(R.id.tl_situacao);
+		this.tl_vencimento = (TableLayout) findViewById(R.id.tl_vencimento);
 		this.rgreceita = (RadioButton) findViewById(R.id.rgreceita);
 		this.rgdespesa = (RadioButton) findViewById(R.id.rgdespesa);
+		this.rgsituacaopago = (RadioButton) findViewById(R.id.rgsituacaopgo);
+		this.rgsituacaoapagar = (RadioButton) findViewById(R.id.rgsituacaoavencer);
 
 
         
@@ -91,9 +98,10 @@ public class LancaDespesa extends Activity {
 		// busca a data atual para mostrar no botão
 		SQLiteDatabase dbexe = db.getReadableDatabase();
 		Cursor cursor = dbexe.rawQuery(
-				"SELECT _id, ds_categoria FROM categoria order by _id", null);
+				"SELECT _id, ds_categoria FROM categoria order by ds_categoria", null);
+		nomes.add("SELECIONE");
 		while (cursor.moveToNext()) {
-			nomes.add(cursor.getString(0) + "-" + cursor.getString(1));
+			nomes.add(cursor.getString(1));
 			
 		}
 
@@ -133,8 +141,7 @@ public class LancaDespesa extends Activity {
 				periodo = dateFormat.format(dataChegadaDate);
 				dataVencimento.setText(periodo);
 				
-				rgsituacaopago = (RadioButton) findViewById(R.id.rgsituacaopgo);
-				rgsituacaoapagar = (RadioButton) findViewById(R.id.rgsituacaoavencer);
+
 				if (cursor.getString(7).equals("P")) //caso a situação seja pago
 				{
 					rgsituacaopago.setChecked(true);	
@@ -142,8 +149,7 @@ public class LancaDespesa extends Activity {
 				} else 
 				{
 					rgsituacaopago.setChecked(false);	
-					rgsituacaoapagar.setChecked(true);
-					
+					rgsituacaoapagar.setChecked(true);					
 				}
 				
 				
@@ -160,7 +166,7 @@ public class LancaDespesa extends Activity {
 				}
 				
 				//verificando qual item do sppiner foi selecinado	
-				straux = cursor.getString(6)+"-"+cursor.getString(9);							 	
+				straux = cursor.getString(9);							 	
 				int spinnerPosition = arrayAdapter.getPosition(straux);
 				categoria.setSelection(spinnerPosition);			 
 				 
@@ -174,14 +180,23 @@ public class LancaDespesa extends Activity {
 	
 	public void selecionarTipo(View view){
 		if(rgdespesa.isChecked()){
-//			radioGroup.setVisibility(RadioGroup.VISIBLE);
-			Toast.makeText(this, "despesa",
-					Toast.LENGTH_LONG).show();
+			rgsituacaopago.setText("Pago");
+			rgsituacaoapagar.setText("A Pagar");
+			tl_situacao.setVisibility(View.VISIBLE);
 		}
 		else if(rgreceita.isChecked()){
-//			radioGroup.setVisibility(RadioGroup.VISIBLE);
-			Toast.makeText(this, "receita",
-					Toast.LENGTH_LONG).show();
+			rgsituacaopago.setText("Recebido");
+			rgsituacaoapagar.setText("A Receber");
+			tl_situacao.setVisibility(View.VISIBLE);
+		}
+	}
+	
+	public void selecionarSituacao(View view){
+		if(rgsituacaoapagar.isChecked()){			
+			tl_vencimento.setVisibility(View.VISIBLE);
+		}
+		else if(rgsituacaopago.isChecked()){
+			tl_vencimento.setVisibility(View.INVISIBLE);
 		}
 	}
 	
@@ -226,18 +241,32 @@ public class LancaDespesa extends Activity {
 	public void InserirDespesa(View view) {
 		flagvalida = true;
 
+
+		
 		if (edtvalor.getText().toString().equals("")) {
-			Toast.makeText(this, "Entre com o valor da despesa",
+			Toast.makeText(this, "Entre com o Valor!",
 					Toast.LENGTH_LONG).show();
 			flagvalida = false;
 
 		}
 
 		if (edthistorico.getText().toString().equals("") ) {
-			Toast.makeText(this, "Entre com a descrição da despesa",
+			Toast.makeText(this, "Entre com a Descrição!",
 					Toast.LENGTH_LONG).show();
 			flagvalida = false;
 
+		}
+		
+		if (categoria.getSelectedItem().toString().equals("SELECIONE")){
+			Toast.makeText(this, "Entre com a Categoria!",
+					Toast.LENGTH_LONG).show();
+			flagvalida = false;
+		}
+		
+		if (!rgdespesa.isChecked() | !rgreceita.isChecked()){
+			Toast.makeText(this, "Entre com Tipo do Lançamento!",
+					Toast.LENGTH_LONG).show();
+			flagvalida = false;
 		}
 
 		if (flagvalida) {
@@ -282,16 +311,27 @@ public class LancaDespesa extends Activity {
 			} else
 				values.put("ds_situacao", "A");
 			
-			String exemplo = categoria.getSelectedItem().toString();
-			int posicao = exemplo.indexOf("-");
-			exemplo = exemplo.substring(0, posicao);
-			values.put("cd_categoria", exemplo);
+			String aux = categoria.getSelectedItem().toString();
+			db = new DatabaseHelper(this);
+			
+			SQLiteDatabase dbexe = db.getReadableDatabase();
+			
+			Cursor cursor1 = dbexe.rawQuery(
+					"SELECT _id FROM categoria where ds_categoria=\""+ aux +"\" order by ds_categoria", null);
+			cursor1.moveToNext();
+			aux = cursor1.getString(0);
+			cursor1.close();
+
+			values.put("cd_categoria", aux);
 
 			long resultado = banco.insert("financas", null, values);
 			edthistorico.setText("");
 			edtvalor.setText("");
+			
 			Toast.makeText(this, "Lançamento salvo com sucesso!",
 					Toast.LENGTH_LONG).show();
+			
+			LancaDespesa.this.finish();
 		}
 	}
 	
