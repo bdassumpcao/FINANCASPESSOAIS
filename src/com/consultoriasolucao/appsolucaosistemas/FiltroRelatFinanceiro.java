@@ -72,7 +72,7 @@ public class FiltroRelatFinanceiro extends Activity {
 		nomes.add("TODOS");
 		while (cursor.moveToNext()) 
 		{
-		  nomes.add(cursor.getString(0)+"-"+cursor.getString(1));
+		  nomes.add(cursor.getString(1));
 		}
 		
 	    cursor.close();

@@ -11,13 +11,5 @@
             
         </item>
         
-         <item android:id="@+id/insere_lancamento" android:title="Inserir Novo Lançamento">
-            
-        </item>
-        
-         <item android:id="@+id/atualiza_lista" android:title="Atualizar Lista">
-            
-        </item>
-        
           
     </menu>

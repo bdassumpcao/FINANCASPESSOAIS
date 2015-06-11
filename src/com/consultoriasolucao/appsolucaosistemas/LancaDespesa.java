@@ -174,12 +174,12 @@ public class LancaDespesa extends Activity {
 	
 	public void selecionarTipo(View view){
 		if(rgdespesa.isChecked()){
-			radioGroup.setVisibility(RadioGroup.VISIBLE);
+//			radioGroup.setVisibility(RadioGroup.VISIBLE);
 			Toast.makeText(this, "despesa",
 					Toast.LENGTH_LONG).show();
 		}
 		else if(rgreceita.isChecked()){
-			radioGroup.setVisibility(RadioGroup.VISIBLE);
+//			radioGroup.setVisibility(RadioGroup.VISIBLE);
 			Toast.makeText(this, "receita",
 					Toast.LENGTH_LONG).show();
 		}

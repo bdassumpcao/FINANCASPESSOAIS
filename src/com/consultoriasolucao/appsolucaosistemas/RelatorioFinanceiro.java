@@ -153,16 +153,6 @@ public class RelatorioFinanceiro extends Activity implements
 							+ cd_lancamento);
 			return true;
 		
-		case R.id.insere_lancamento:
-
-			startActivity(new Intent(this, LancaDespesa.class));
-			return true;
-			
-			
-		case R.id.atualiza_lista:
-
-			buscarrelat();
-			return true;
 			
 		case R.id.editar_lancamento:
 
