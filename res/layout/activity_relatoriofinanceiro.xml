@@ -4,12 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
             
-           
-
             <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp" >
 
                 <TableRow
                     android:id="@+id/tableRow1"
@@ -20,14 +18,20 @@
                         android:id="@+id/textView1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Receitas  (+)R$: " />
+                        android:layout_margin="1dp"
+                        android:text="Total Receitas  (+) R$: "
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/txtttreceita"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:layout_weight="0.5"
                         android:text="0,00"
-                        android:textColor="@color/azul" />
+                        android:textColor="@color/azul"
+                        android:textSize="18sp" />
+
                 </TableRow>
 
                 <TableRow
@@ -39,17 +43,19 @@
                         android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Despesas (-)R$: " />
+                        android:layout_margin="1dp"
+                        android:text="Total Despesas (-) R$: "
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/txtttdespesa"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:layout_weight="0.5"
                         android:text="0,00"
                         android:textColor="@color/vermelho"
-                        android:layout_weight="0.5" />
-
-
+                        android:textSize="18sp" />
 
                 </TableRow>
                 <TableRow
@@ -61,55 +67,62 @@
                         android:id="@+id/textView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Saldo....................R$:" />
+                        android:layout_margin="1dp"
+                        android:text="Saldo.....................R$:"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/txtsaldo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0,00"            
-                        android:layout_weight="0.5"             
-                        android:textColor="@color/vermelho" />
+                        android:layout_margin="1dp"
+                        android:layout_weight="0.5"
+                        android:text="0,00"
+                        android:textColor="@color/vermelho"
+                        android:textSize="18sp" />
+
                 </TableRow>
-                
+
                 <TableRow
                     android:id="@+id/tableRow4"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    
                     android:layout_marginLeft="10sp"
-                    android:layout_marginStart="10sp" >
+                    android:layout_marginRight="10sp"
+                    android:gravity="center_horizontal" >
 
-                                  <Button
-                                      android:id="@+id/button1"
-                                      android:layout_width="wrap_content"
-                                      android:layout_height="wrap_content"
-                                      android:onClick="lancaDespesa"
-                                      android:textSize="14sp"
-                                      android:text="Novo Lancamento" />
+                    <Button
+                        android:id="@+id/button1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:layout_weight="0.5"
+                        android:background="@drawable/button"
+                        android:onClick="lancaDespesa"
+                        android:text="Novo Lancamento"
+                        android:textSize="18sp" />
 
-                                  <Button
-                                      android:id="@+id/button2"
-                                      android:layout_width="wrap_content"
-                                      android:layout_height="wrap_content"
-                                      android:onClick="relatorioFinanceiro"
-                                      android:text="Localizar Lancamento"
-                                      android:textSize="14sp" />
-        
-        		</TableRow>
-                
-                
-                
+                    <Button
+                        android:id="@+id/button2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:layout_weight="0.5"
+                        android:background="@drawable/button"
+                        android:onClick="relatorioFinanceiro"
+                        android:text="Localizar Lancamento"
+                        android:textSize="18sp" />
+
+                </TableRow>
  
             </TableLayout>
             
-     
-
-   
   <ListView
-        android:id="@+id/listarelatfin"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+      android:id="@+id/listarelatfin"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_margin="1dp" >
+
     </ListView>
     
 </LinearLayout>

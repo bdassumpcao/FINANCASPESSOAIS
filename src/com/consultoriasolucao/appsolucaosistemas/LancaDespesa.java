@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -16,15 +16,12 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -33,9 +30,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TableLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+@SuppressLint("SimpleDateFormat")
 public class LancaDespesa extends Activity {
 
 	public static final String EXTRA_CD_LANCAMENTO = "AppSolucaoSistemas.EXTRA_CD_LANCAMENTO";
@@ -49,7 +46,6 @@ public class LancaDespesa extends Activity {
 	private Button dataVencimento;
 	private Spinner categoria;
 	private List<String> nomes = new ArrayList<String>();
-	private String nome;
 	private RadioGroup radioGroup;
 	private RadioGroup rgreceitadespesa;
 	private String datasel;
@@ -200,12 +196,14 @@ public class LancaDespesa extends Activity {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void selecionarDataLancamento(View view) {
 		showDialog(view.getId());
 		datasel = "DataLancamento";
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public void selecionarDataVencimento(View view) {
 		showDialog(view.getId());
 		datasel = "DataVencimento";
@@ -241,30 +239,41 @@ public class LancaDespesa extends Activity {
 	public void InserirDespesa(View view) {
 		flagvalida = true;
 
-
 		
-		if (edtvalor.getText().toString().equals("")) {
-			Toast.makeText(this, "Entre com o Valor!",
-					Toast.LENGTH_LONG).show();
-			flagvalida = false;
-
-		}
-
 		if (edthistorico.getText().toString().equals("") ) {
-			Toast.makeText(this, "Entre com a Descrição!",
-					Toast.LENGTH_LONG).show();
+			edthistorico.setError("Entre com a Descrição!");
+			edthistorico.requestFocus();
 			flagvalida = false;
 
 		}
 		
-		if (categoria.getSelectedItem().toString().equals("SELECIONE")){
+		else if (edtvalor.getText().toString().equals("")) {
+			edtvalor.setError("Entre com o Valor!");
+			edtvalor.requestFocus();
+			flagvalida = false;
+
+		}
+		
+		else if (categoria.getSelectedItem().toString().equals("SELECIONE")){
+			categoria.requestFocus();
 			Toast.makeText(this, "Entre com a Categoria!",
 					Toast.LENGTH_LONG).show();
 			flagvalida = false;
 		}
 		
-		if (!rgdespesa.isChecked() | !rgreceita.isChecked()){
+		else if ((!rgdespesa.isChecked()) & (!rgreceita.isChecked())){
+			rgreceita.setError("Entre com Tipo do Lançamento!");
+			rgreceita.requestFocus();
 			Toast.makeText(this, "Entre com Tipo do Lançamento!",
+					Toast.LENGTH_LONG).show();
+			flagvalida = false;
+		}
+		
+		
+		else if ((!rgsituacaoapagar.isChecked()) & (!rgsituacaopago.isChecked())){
+			rgsituacaoapagar.setError("Entre com a Situação do Título!");
+			rgsituacaoapagar.requestFocus();
+			Toast.makeText(this, "Entre com a Situação do Título!",
 					Toast.LENGTH_LONG).show();
 			flagvalida = false;
 		}
@@ -324,7 +333,7 @@ public class LancaDespesa extends Activity {
 
 			values.put("cd_categoria", aux);
 
-			long resultado = banco.insert("financas", null, values);
+			banco.insert("financas", null, values);
 			edthistorico.setText("");
 			edtvalor.setText("");
 			
