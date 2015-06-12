@@ -1,13 +1,12 @@
 package com.consultoriasolucao.appsolucaosistemas;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.webkit.WebView;
 
 
 public class FinancasPessoais extends Activity {
@@ -18,6 +17,9 @@ public class FinancasPessoais extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_financaspessoais);
+
+		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().hide();
 		
 		//procedimento para verificar se as categorias padrões foram lançadas
 		helper = new DatabaseHelper(this);	

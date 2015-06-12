@@ -7,28 +7,33 @@
     <string name="erro_salvar">Erro ao salvar</string>
     <string name="sitaucaopago">Pago</string>
     <string name="situacaoavencer">A vencer</string>
+    <string name="categoria">Categoria</string>
+    <string name="ReceitaOuDespesa">Receita ou Despesa</string>
+    <string name="Situacao">Situação</string>
 
     <string-array name="ds_stiuacaotitulo">
-<item>TODOS</item>
- <item>Pagos</item>
- <item>A Vencer</item> 
- </string-array>
+        Situação
+		<item>TODOS</item>
+	 	<item>Pagos</item>
+	 	<item>A Vencer</item> 
+	</string-array>
  
     <string-array name="ds_tiporeceitadesp">
-<item>TODOS</item>
- <item>Receita</item>
- <item>Despesa</item> 
- </string-array>
+        Tipo
+		<item>TODOS</item>
+	 	<item>Receita</item>
+	 	<item>Despesa</item> 
+	</string-array>
  
      <string-array name="ds_formapgto">
-<item>SELECIONE</item>
- <item>A VISTA</item>
- <item>BOLETO</item>
- <item>CARTEIRA</item>
- <item>CHEQUE</item>
- <item>CARTAO</item>
- <item>DEPOSITO EM CONTA</item>
- <item>OUTROS</item> 
- </string-array>
+		 <item>SELECIONE</item>
+		 <item>A VISTA</item>
+		 <item>BOLETO</item>
+		 <item>CARTEIRA</item>
+		 <item>CHEQUE</item>
+		 <item>CARTAO</item>
+		 <item>DEPOSITO EM CONTA</item>
+		 <item>OUTROS</item> 
+	 </string-array>
 
 </resources>

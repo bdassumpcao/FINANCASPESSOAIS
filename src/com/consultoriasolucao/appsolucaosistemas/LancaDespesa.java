@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -60,6 +61,7 @@ public class LancaDespesa extends Activity {
     private TableLayout tl_situacao;
     private TableLayout tl_vencimento;
     private String straux;
+    ArrayAdapter<String> arrayAdapter;
 
     
     
@@ -67,6 +69,10 @@ public class LancaDespesa extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lancardespesa);
+		
+		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().hide();
+		
 		db = new DatabaseHelper(this);
 
 		this.edtvalor = (EditText) findViewById(R.id.edtvalor);
@@ -79,6 +85,7 @@ public class LancaDespesa extends Activity {
 		this.rgdespesa = (RadioButton) findViewById(R.id.rgdespesa);
 		this.rgsituacaopago = (RadioButton) findViewById(R.id.rgsituacaopgo);
 		this.rgsituacaoapagar = (RadioButton) findViewById(R.id.rgsituacaoavencer);
+		this.categoria = (Spinner) findViewById(R.id.categoria);
 
 
         
@@ -91,29 +98,10 @@ public class LancaDespesa extends Activity {
 		dataVencimento = (Button) findViewById(R.id.btdtvenciento);
 		dataVencimento.setText(dia + "/" + (mes + 1) + "/" + ano);
 
-		// busca a data atual para mostrar no botão
+
 		SQLiteDatabase dbexe = db.getReadableDatabase();
-		Cursor cursor = dbexe.rawQuery(
-				"SELECT _id, ds_categoria FROM categoria order by ds_categoria", null);
-		nomes.add("SELECIONE");
-		while (cursor.moveToNext()) {
-			nomes.add(cursor.getString(1));
-			
-		}
-
-		cursor.close();
-		categoria = (Spinner) findViewById(R.id.categoria);
-
-		// Cria um ArrayAdapter usando um padrão de layout da classe R do
-		// android, passando o ArrayList nomes
-		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_dropdown_item, nomes);
-		ArrayAdapter<String> spinnerArrayAdapter = arrayAdapter;
-		spinnerArrayAdapter
-				.setDropDownViewResource(android.R.layout.simple_spinner_item);
 		
-		categoria.setAdapter(spinnerArrayAdapter);
-		
+		carregaSpinnerCategoria();
 		
 		
 		cd_lancamento=""; //codigo do lancamento e a flag para verificar se é edição ou inserção
@@ -121,7 +109,7 @@ public class LancaDespesa extends Activity {
 		if (intent.hasExtra(EXTRA_CD_LANCAMENTO)) {//caso seja edição então carregando os campos
 
 			cd_lancamento = intent.getStringExtra(EXTRA_CD_LANCAMENTO);
-			cursor = dbexe.rawQuery(
+			Cursor cursor = dbexe.rawQuery(
 					"SELECT a._id, a.ds_historico, coalesce(a.vl_despesa,0), coalesce(a.vl_receita,0), a.dt_lancamento,a.dt_vencimento, a.cd_categoria, a.ds_situacao,  a.ds_tipo,b.ds_categoria from financas a join categoria b on (a.cd_categoria=b._id) where a._id="+cd_lancamento, null);
 			while (cursor.moveToNext()) {
 				edthistorico.setText(cursor.getString(1));				
@@ -149,7 +137,6 @@ public class LancaDespesa extends Activity {
 				}
 				
 				
-
 				if (cursor.getString(8).equals("D")) //caso a situação seja pago
 				{
 					rgreceita.setChecked(false);	
@@ -167,9 +154,7 @@ public class LancaDespesa extends Activity {
 				categoria.setSelection(spinnerPosition);			 
 				 
 			}
-
 			cursor.close();
-
 		}
 
 	}
@@ -288,18 +273,12 @@ public class LancaDespesa extends Activity {
 			}
 			
 			ContentValues values = new ContentValues();
-			values.put("ds_historico", edthistorico.getText().toString());
-			
-			
+			values.put("ds_historico", edthistorico.getText().toString());	
 			
 			dt_lancamento = ConvertToDate(dataGasto.getText().toString());
 			values.put("dt_lancamento", dt_lancamento.getTime());
 			dt_vencimento = ConvertToDate(dataVencimento.getText().toString()); 
 			values.put("dt_vencimento", dt_vencimento.getTime());
-
-			
-			
-
 
 			int tipo = rgreceitadespesa.getCheckedRadioButtonId();
 			if (tipo == R.id.rgdespesa) 
@@ -359,9 +338,34 @@ public class LancaDespesa extends Activity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+		
 	}
 
+	public void cadCategoria(View view)
+	{
+		startActivity(new Intent(this, Categoria.class));
+	}
+
+	public void carregaSpinnerCategoria(){
+		nomes.clear();
+		Cursor c = db.getReadableDatabase().rawQuery(
+				"SELECT _id, ds_categoria FROM categoria order by ds_categoria", null);
+		nomes.add("SELECIONE");
+		while (c.moveToNext()) {
+			nomes.add(c.getString(1));
+			
+		}
+
+		c.close();
+		// Cria um ArrayAdapter usando um padrão de layout da classe R do
+		// android, passando o ArrayList nomes
+		arrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, nomes);
+		ArrayAdapter<String> spinnerArrayAdapter = arrayAdapter;
+		spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+		
+		categoria.setAdapter(spinnerArrayAdapter);
+	}
+		
 	public void tiraFoto(View view) {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		File file = new File(Environment.getExternalStorageDirectory(),
@@ -377,6 +381,13 @@ public class LancaDespesa extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.solucao_sistemas, menu);
 		return true;
+	}
+	
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		carregaSpinnerCategoria();
 	}
 
 }

@@ -30,7 +30,7 @@ public class FiltroRelatFinanceiro extends Activity {
 	boolean flagdataini;
 	private DatabaseHelper db;
 	private List<String> nomes = new ArrayList<String>();
-	private Spinner categoria;
+	private Spinner categoria;	
 	private Spinner situacao;
 	private Spinner ds_tipo;
 	private String filtro;
@@ -40,6 +40,11 @@ public class FiltroRelatFinanceiro extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_filtrorelatfinanceiro);
+		
+		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().hide();
+		
+		db = new DatabaseHelper(this);
 		
 		Calendar calendar = Calendar.getInstance();
 		ano = calendar.get(Calendar.YEAR);
@@ -51,21 +56,16 @@ public class FiltroRelatFinanceiro extends Activity {
 		btdtfim = (Button) findViewById(R.id.btdatafim);
 		btdtfim.setText(dia + "/" + (mes+1) + "/" + ano);
 		
-		
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.ds_stiuacaotitulo,android.R.layout.simple_spinner_item);
 		situacao = (Spinner) findViewById(R.id.ds_situacaosel);
-		situacao.setAdapter(adapter);
-		
-		ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this, R.array.ds_tiporeceitadesp,android.R.layout.simple_spinner_item);
 		ds_tipo = (Spinner) findViewById(R.id.ds_tiporeceitadespesa);
-		ds_tipo.setAdapter(adapter1);
 		
-		db = new DatabaseHelper(this);
-		carregarspinner();
+		carregarSpinnerCategoria();
+		carregarSpinnerTipo();
+		carregarSpinnerSituacao();
 		
 	}
 	
-	public void carregarspinner()
+	public void carregarSpinnerCategoria()
 	{
 		SQLiteDatabase dbexe = db.getReadableDatabase();
 		Cursor cursor = dbexe.rawQuery("SELECT _id, ds_categoria FROM categoria order by ds_categoria",	null);
@@ -79,10 +79,32 @@ public class FiltroRelatFinanceiro extends Activity {
 		categoria = (Spinner) findViewById(R.id.categoriasel);
 		
 		//Cria um ArrayAdapter usando um padrão de layout da classe R do android, passando o ArrayList nomes
-		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, nomes);
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, nomes);
 		ArrayAdapter<String> spinnerArrayAdapter = arrayAdapter;
-		spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+		spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 		categoria.setAdapter(spinnerArrayAdapter);
+	}
+	
+	public void carregarSpinnerTipo(){
+		String[] tipos = {"TODOS", "RECEITA", "DESPESA"};
+		
+		//Cria um ArrayAdapter usando um padrão de layout da classe R do android, passando o ArrayList nomes
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, tipos);
+		ArrayAdapter<String> spinnerArrayAdapter = arrayAdapter;
+		spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+		ds_tipo.setAdapter(spinnerArrayAdapter);
+		
+	}
+	
+	public void carregarSpinnerSituacao(){
+		String[] situacoes = {"TODOS", "PAGOS", "A VENCER"};
+		
+		//Cria um ArrayAdapter usando um padrão de layout da classe R do android, passando o ArrayList nomes
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, situacoes);
+		ArrayAdapter<String> spinnerArrayAdapter = arrayAdapter;
+		spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+		situacao.setAdapter(spinnerArrayAdapter);
+		
 	}
 	
 	public void selecionarDataini(View view){

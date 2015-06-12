@@ -15,7 +15,8 @@ public class QuemSomos extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_quemsomos);
 		
-		
+		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().hide();
 		
 	}
 

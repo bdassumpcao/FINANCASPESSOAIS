@@ -20,6 +20,10 @@ public class Categoria extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_categoria);
+		
+		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().hide();
+		
 		this.edtds_categoria = (EditText)findViewById(R.id.edtds_categoria);
 		// prepara acesso ao banco de dados
 		helper = new DatabaseHelper(this);	

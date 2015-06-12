@@ -26,6 +26,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -70,6 +71,9 @@ public class RelatorioFinanceiro extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_relatoriofinanceiro);
+		
+		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().hide();
 		
 		lista = (ListView) findViewById(R.id.listarelatfin);
 		txtttdespesa = (TextView) findViewById(R.id.txtttdespesa);
@@ -188,7 +192,7 @@ public class RelatorioFinanceiro extends Activity implements
 
 		dt_ini = ConvertToDate(dataini);
 		dt_fim = ConvertToDate(datafim);
-		strsql = "select a._id,  a.dt_lancamento, a.vl_despesa,a.vl_receita , a.ds_historico, coalesce(b.ds_categoria,''),a.dt_vencimento, a.ds_situacao  from financas a left join categoria b on (a.cd_categoria =b._id)  ";
+		strsql = "select a._id,  a.dt_lancamento, a.vl_despesa,a.vl_receita , a.ds_historico, coalesce(b.ds_categoria,''),a.dt_vencimento, a.ds_situacao  from financas a left join categoria b on (a.cd_categoria=b._id)  ";
 
 		if (situacao.substring(0, 1).equals("A")) // caso o usuario queira os
 													// titulos em aberto puxa
@@ -201,25 +205,32 @@ public class RelatorioFinanceiro extends Activity implements
 					+ dt_ini.getTime() + "' and  '" + dt_fim.getTime() + "'  ";
 
 		if (!categoria.equals("TODOS")) {
-			int posicao = categoria.indexOf("-");
-			strsql = strsql + " AND a.cd_categoria ="
-					+ categoria.substring(0, posicao);
+			String posicao = "";
+			Cursor cursor1 = db.getReadableDatabase().rawQuery(
+					"SELECT _id FROM categoria where ds_categoria=\""+ categoria +"\" order by ds_categoria", null);
+			cursor1.moveToNext();
+			posicao = cursor1.getString(0);
+			cursor1.close();
+			
+			strsql = strsql + " AND a.cd_categoria ="+ posicao;
+//			Log.i("financas", strsql);
 		}
 
 		if (!situacao.equals("TODOS")) {
 
-			strsql = strsql + " AND coalesce(a.ds_situacao,'P') ='"
+			strsql = strsql + " AND coalesce(a.ds_situacao,'P')='"
 					+ situacao.substring(0, 1) + "' ";
 		}
 
 		if (!ds_tipo.equals("TODOS")) {
 
-			strsql = strsql + " AND a.ds_tipo ='" + ds_tipo.substring(0, 1)
+			strsql = strsql + " AND a.ds_tipo='" + ds_tipo.substring(0, 1)
 					+ "' ";
 		}
 
 		strsql = strsql + "  order by a.dt_lancamento";
 
+		Log.i("financas", strsql);
 		Cursor c = db.getReadableDatabase().rawQuery(strsql, null);
 		produtos = new ArrayList<Map<String, String>>();
 		DecimalFormat df = new DecimalFormat(",##0.00");
@@ -274,9 +285,14 @@ public class RelatorioFinanceiro extends Activity implements
 					+ dt_ini.getTime() + "'  and '" + dt_fim.getTime() + "'  ";
 
 		if (!categoria.equals("TODOS")) {
-			int posicao = categoria.indexOf("-");
-			strsql = strsql + " AND cd_categoria ="
-					+ categoria.substring(0, posicao);
+			String posicao = "";
+			Cursor cursor1 = db.getReadableDatabase().rawQuery(
+					"SELECT _id FROM categoria where ds_categoria=\""+ categoria +"\" order by ds_categoria", null);
+			cursor1.moveToNext();
+			posicao = cursor1.getString(0);
+			cursor1.close();
+
+			strsql = strsql + " AND cd_categoria ="+ posicao;
 		}
 
 		if (!situacao.equals("TODOS")) {

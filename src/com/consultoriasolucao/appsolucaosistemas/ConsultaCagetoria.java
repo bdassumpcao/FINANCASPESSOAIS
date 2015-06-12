@@ -45,14 +45,13 @@ OnItemClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_consultacategoria);
+		
+		getActionBar().setDisplayShowHomeEnabled(false);
+		getActionBar().hide();
+		
 	    lista = (ListView) findViewById(R.id.listacagetoria);
 
 		db = new DatabaseHelper(this);
-
-		
-		
-		
-
 		
 		lista.setOnItemClickListener(this);
 		registerForContextMenu(lista); 

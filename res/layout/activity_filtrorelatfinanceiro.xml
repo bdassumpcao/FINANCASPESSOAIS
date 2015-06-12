@@ -95,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
-        android:text="Categoria"
+        android:text="@string/categoria"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -104,7 +104,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
-        android:prompt="@string/erro_salvar" >
+        android:spinnerMode="dialog" >
 
     </Spinner>
 
@@ -113,7 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
-        android:text="Situação"
+        android:text="@string/Situacao"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -122,7 +122,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
-        android:prompt="@array/ds_stiuacaotitulo" >
+        android:spinnerMode="dialog" >
 
     </Spinner>
 
@@ -131,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
-        android:text="Receita ou Despesa"
+        android:text="@string/ReceitaOuDespesa"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -140,7 +140,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
-        android:prompt="@array/ds_tiporeceitadesp" >
+        android:spinnerMode="dialog" >
 
     </Spinner>
 
