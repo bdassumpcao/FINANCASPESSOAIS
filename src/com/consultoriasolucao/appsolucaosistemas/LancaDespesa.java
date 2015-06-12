@@ -163,12 +163,12 @@ public class LancaDespesa extends Activity {
 		if(rgdespesa.isChecked()){
 			rgsituacaopago.setText("Pago");
 			rgsituacaoapagar.setText("A Pagar");
-			tl_situacao.setVisibility(View.VISIBLE);
+//			tl_situacao.setVisibility(View.VISIBLE);
 		}
 		else if(rgreceita.isChecked()){
 			rgsituacaopago.setText("Recebido");
 			rgsituacaoapagar.setText("A Receber");
-			tl_situacao.setVisibility(View.VISIBLE);
+//			tl_situacao.setVisibility(View.VISIBLE);
 		}
 	}
 	

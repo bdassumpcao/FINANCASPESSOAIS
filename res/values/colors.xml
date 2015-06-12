@@ -7,12 +7,17 @@
 <color name="categoria_transporte">#0099CC</color>
 <color name="categoria_outros">#ACBFD5</color>
 <color name="vermelhoclaro">#FF6666</color>
+<color name="black">#000000</color>
 <color name="vermelho">#FF0000</color>
 <color name="branco">#FFFFFF</color>
 <color name="cinzaclaro">#EEEEEE</color>
-<color name="azul">#0000FF</color>
+<color name="blue">#ff1c5fab</color>
+<color name="royalBlue">#4169E1</color>
+<color name="skyBlue">#87CEEB</color>
+<color name="deepSkyBlue">#00BFFF</color>
 <color name="Layout">#E0EEEE</color>
 <color name="PRATA">#f0f8ff</color>
+
 
 
 </resources>

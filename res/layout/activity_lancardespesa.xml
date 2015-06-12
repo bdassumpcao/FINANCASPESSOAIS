@@ -150,23 +150,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
-                    
+                    android:layout_weight="0.2"
                     android:background="@color/branco"
                     android:spinnerMode="dialog" >
 
                 </Spinner>
                 
-	           <ImageView
-	               android:id="@+id/imageView1"
+	           <Button
+	               android:id="@+id/button15"
+	               style="@drawable/button"
 	               android:layout_width="match_parent"
 	               android:layout_height="wrap_content"
 	               android:layout_margin="1dp"
-	               android:layout_weight="0.5"
+	               android:layout_weight="0.9"
+	               android:background="@drawable/cadascatego"
+	               android:height="10dp"
 	               android:onClick="cadCategoria"
-	               android:paddingBottom="30px"
-	               android:paddingLeft="20px"
-	               android:paddingRight="20px"
-	               android:src="@drawable/cadascatego" />
+	               android:paddingBottom="20dp"
+	               android:width="10dp" />
 
             </TableRow>
 
@@ -255,8 +256,7 @@
             <TableLayout
                 android:id="@+id/tl_situacao"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="invisible" >
+                android:layout_height="wrap_content" >
 
                 <TableRow
                     android:id="@+id/tableRow9"
@@ -380,15 +380,16 @@
 	                android:layout_height="wrap_content"
 	                android:gravity="center_horizontal" >
 	            
-	                	<ImageView
+	                	<Button
 	                	    android:id="@+id/imageView2"
 	                	    android:layout_width="match_parent"
 	                	    android:layout_height="match_parent"
 	                	    android:layout_margin="2dp"
 	                	    android:onClick="InserirDespesa"
-	                	    android:src="@drawable/inserir" />
+	                	    android:text="Inserir"
+	                	    android:background="@drawable/button" />
 
-           </TableRow>
+           	</TableRow>
             
         </LinearLayout>
         
