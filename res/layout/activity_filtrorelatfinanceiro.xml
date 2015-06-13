@@ -15,9 +15,9 @@
     android:orientation="vertical"  >
     
 	<TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/deepSkyBlue" >
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@color/skyBlue" >
 		
 	    <TableRow
             android:id="@+id/tableRow1"
@@ -151,14 +151,15 @@
         android:layout_height="wrap_content"
         android:text="" />
 
-    <ImageView
+    <Button
         android:id="@+id/imageView1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="1dp"
+        android:background="@drawable/button"
         android:onClick="buscarRelat"
-        android:src="@drawable/buscar" />
+        android:layout_gravity="center_horizontal"
+        android:text="Buscar" />
     
     </LinearLayout>
     
