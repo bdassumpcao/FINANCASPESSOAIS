@@ -29,8 +29,10 @@ public class FiltroRelatFinanceiro extends Activity {
 	private int ano, mes, dia;
 	boolean flagdataini;
 	private DatabaseHelper db;
-	private List<String> nomes = new ArrayList<String>();
+	private List<String> nomesCategoria = new ArrayList<String>();
+	private List<String> nomesPagamento = new ArrayList<String>();
 	private Spinner categoria;	
+	private Spinner pagamento;
 	private Spinner situacao;
 	private Spinner ds_tipo;
 	private String filtro;
@@ -60,6 +62,7 @@ public class FiltroRelatFinanceiro extends Activity {
 		ds_tipo = (Spinner) findViewById(R.id.ds_tiporeceitadespesa);
 		
 		carregarSpinnerCategoria();
+		carregarSpinnerPagamento();
 		carregarSpinnerTipo();
 		carregarSpinnerSituacao();
 		
@@ -67,22 +70,44 @@ public class FiltroRelatFinanceiro extends Activity {
 	
 	public void carregarSpinnerCategoria()
 	{
+		nomesCategoria.clear();
 		SQLiteDatabase dbexe = db.getReadableDatabase();
 		Cursor cursor = dbexe.rawQuery("SELECT _id, ds_categoria FROM categoria order by ds_categoria",	null);
-		nomes.add("TODOS");
+		nomesCategoria.add("TODOS");
 		while (cursor.moveToNext()) 
 		{
-		  nomes.add(cursor.getString(1));
+		  nomesCategoria.add(cursor.getString(1));
 		}
 		
 	    cursor.close();
 		categoria = (Spinner) findViewById(R.id.categoriasel);
 		
 		//Cria um ArrayAdapter usando um padrão de layout da classe R do android, passando o ArrayList nomes
-		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, nomes);
+		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, nomesCategoria);
 		ArrayAdapter<String> spinnerArrayAdapter = arrayAdapter;
 		spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 		categoria.setAdapter(spinnerArrayAdapter);
+	}
+	
+	public void carregarSpinnerPagamento()
+	{
+		nomesPagamento.clear();
+		SQLiteDatabase dbexe2 = db.getReadableDatabase();
+		Cursor cursor = dbexe2.rawQuery("SELECT _id, ds_pagamento FROM pagamento order by ds_pagamento",	null);
+		nomesPagamento.add("TODOS");
+		while (cursor.moveToNext()) 
+		{
+		  nomesPagamento.add(cursor.getString(1));
+		}
+		
+	    cursor.close();
+		pagamento = (Spinner) findViewById(R.id.pagamentosel);
+		
+		//Cria um ArrayAdapter usando um padrão de layout da classe R do android, passando o ArrayList nomes
+		ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(this, R.layout.spinner_item, nomesPagamento);
+		ArrayAdapter<String> spinnerArrayAdapter2 = arrayAdapter2;
+		spinnerArrayAdapter2.setDropDownViewResource(R.layout.spinner_dropdown_item);
+		pagamento.setAdapter(spinnerArrayAdapter2);
 	}
 	
 	public void carregarSpinnerTipo(){
@@ -145,7 +170,7 @@ public class FiltroRelatFinanceiro extends Activity {
 
 	public void buscarRelat(View view)
 	{
-		filtro =btdtini.getText().toString()+"|"+btdtfim.getText().toString()+"|"+categoria.getSelectedItem().toString()+"|"+situacao.getSelectedItem().toString()+"|"+ds_tipo.getSelectedItem().toString()+"|";
+		filtro =btdtini.getText().toString()+"|"+btdtfim.getText().toString()+"|"+categoria.getSelectedItem().toString()+"|"+pagamento.getSelectedItem().toString()+"|"+situacao.getSelectedItem().toString()+"|"+ds_tipo.getSelectedItem().toString()+"|";
 		
 		Intent intent = new Intent(this, RelatorioFinanceiro.class);
 		intent.putExtra(RelatorioFinanceiro.EXTRA_NOME_USUARIO, filtro);

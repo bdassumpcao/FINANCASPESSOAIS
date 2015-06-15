@@ -64,6 +64,7 @@ public class RelatorioFinanceiro extends Activity implements
 	private String dtini;
 	private String dtfim;
 	private String categoria1;
+	private String pagamento;
 	private String situacao;
 	private String ds_tipo;	
 
@@ -99,16 +100,17 @@ public class RelatorioFinanceiro extends Activity implements
 			dtini = st.nextToken();
 			dtfim = st.nextToken();
 			categoria1 = st.nextToken();
+			pagamento = st.nextToken();
 			situacao = st.nextToken();
 			ds_tipo = st.nextToken();
 		}
 		String de[] = {  "dt_lancamento", "cd_lancamento","vl_lancamento",
-				"ds_historico", "ds_categoria" ,"dt_vencimento","ds_situacao" };
+				"ds_historico", "ds_categoria", "ds_pagamento","dt_vencimento","ds_situacao" };
 		int para[] = { R.id.dt_lancamento, R.id.cd_lancamentolist,
-				R.id.vl_lancamento, R.id.ds_historico, R.id.ds_categoria12 , R.id.dt_vencimento, R.id.ds_situacao};
+				R.id.vl_lancamento, R.id.ds_historico, R.id.ds_categoria , R.id.ds_pagamento,R.id.dt_vencimento, R.id.ds_situacao};
 
 		SimpleAdapter adapter = new SimpleAdapter(this, buscarRelat(dtini,
-				dtfim, categoria1, situacao, ds_tipo),
+				dtfim, categoria1, pagamento, situacao, ds_tipo),
 				R.layout.listview_relatfinanceiro, de, para);
 
 		lista.setAdapter(adapter);
@@ -183,7 +185,7 @@ public class RelatorioFinanceiro extends Activity implements
 	}
 
 	private List<Map<String, String>> buscarRelat(String dataini,
-			String datafim, String categoria, String situacao, String ds_tipo) {
+			String datafim, String categoria, String pagamento, String situacao, String ds_tipo) {
 		// buscar todos os produtos do banco
 
 		SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
@@ -192,7 +194,8 @@ public class RelatorioFinanceiro extends Activity implements
 
 		dt_ini = ConvertToDate(dataini);
 		dt_fim = ConvertToDate(datafim);
-		strsql = "select a._id,  a.dt_lancamento, a.vl_despesa,a.vl_receita , a.ds_historico, coalesce(b.ds_categoria,''),a.dt_vencimento, a.ds_situacao  from financas a left join categoria b on (a.cd_categoria=b._id)  ";
+		strsql = "select a._id,  a.dt_lancamento, a.vl_despesa,a.vl_receita , a.ds_historico, coalesce(b.ds_categoria,''), coalesce(c.ds_pagamento,''),a.dt_vencimento, "
+				+ "a.ds_situacao  from financas a left join categoria b on (a.cd_categoria=b._id) join pagamento c on (a.cd_pagamento=c._id) ";
 
 		if (situacao.substring(0, 1).equals("A")) // caso o usuario queira os
 													// titulos em aberto puxa
@@ -213,6 +216,18 @@ public class RelatorioFinanceiro extends Activity implements
 			cursor1.close();
 			
 			strsql = strsql + " AND a.cd_categoria ="+ posicao;
+//			Log.i("financas", strsql);
+		}
+		
+		if (!pagamento.equals("TODOS")) {
+			String posicao = "";
+			Cursor cursor2 = db.getReadableDatabase().rawQuery(
+					"SELECT _id FROM pagamento where ds_pagamento=\""+ pagamento +"\" order by ds_pagamento", null);
+			cursor2.moveToNext();
+			posicao = cursor2.getString(0);
+			cursor2.close();
+			
+			strsql = strsql + " AND a.cd_pagamento ="+ posicao;
 //			Log.i("financas", strsql);
 		}
 
@@ -256,13 +271,14 @@ public class RelatorioFinanceiro extends Activity implements
 
 			mapa.put("ds_historico", c.getString(4).toString());
 			mapa.put("ds_categoria", c.getString(5).toString());
-			dt_aux = new Date(c.getLong(6));
-			if (c.getLong(1) != c.getLong(6)) //caso o vencimento seja diferente da data de lançamento quer dizer que é um lançamento a vencer
+			mapa.put("ds_pagamento", c.getString(6).toString());
+			dt_aux = new Date(c.getLong(7));
+			if (c.getLong(1) != c.getLong(7)) //caso o vencimento seja diferente da data de lançamento quer dizer que é um lançamento a vencer
 			{
 			  mapa.put("dt_vencimento","Venc.:  "+ dateFormat.format(dt_aux));
 			} else mapa.put("dt_vencimento","");
 			
-			if (c.getString(7).toString().equals("A"))
+			if (c.getString(8).toString().equals("A"))
 			{
 				mapa.put("ds_situacao","A Vencer");
 			} else mapa.put("ds_situacao","Pago");
@@ -293,6 +309,17 @@ public class RelatorioFinanceiro extends Activity implements
 			cursor1.close();
 
 			strsql = strsql + " AND cd_categoria ="+ posicao;
+		}
+		
+		if (!pagamento.equals("TODOS")) {
+			String posicao = "";
+			Cursor cursor2 = db.getReadableDatabase().rawQuery(
+					"SELECT _id FROM pagamento where ds_pagamento=\""+ pagamento +"\" order by ds_pagamento", null);
+			cursor2.moveToNext();
+			posicao = cursor2.getString(0);
+			cursor2.close();
+
+			strsql = strsql + " AND cd_pagamento ="+ posicao;
 		}
 
 		if (!situacao.equals("TODOS")) {

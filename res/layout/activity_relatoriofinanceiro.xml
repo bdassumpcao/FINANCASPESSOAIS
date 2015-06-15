@@ -120,8 +120,13 @@
   <ListView
       android:id="@+id/listarelatfin"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_margin="1dp" >
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="2dp"
+      android:layout_marginRight="2dp"
+      android:layout_marginTop="2dp" 
+      android:drawSelectorOnTop="false" android:dividerHeight="0px"
+
+			android:footerDividersEnabled="true" android:headerDividersEnabled="true" >
 
     </ListView>
     

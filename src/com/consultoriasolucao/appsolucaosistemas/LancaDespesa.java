@@ -169,6 +169,7 @@ public class LancaDespesa extends Activity {
 			}
 			cursor.close();
 		}
+		
 
 	}
 	
@@ -398,14 +399,14 @@ public class LancaDespesa extends Activity {
 	
 	public void carregaSpinnerPagamento(){
 		nomesPagamento.clear();
-		Cursor c = db.getReadableDatabase().rawQuery(
+		Cursor c1 = db.getReadableDatabase().rawQuery(
 				"SELECT _id, ds_pagamento FROM pagamento order by ds_pagamento", null);
 		nomesPagamento.add("SELECIONE");
-		while (c.moveToNext()) {
-			nomesPagamento.add(c.getString(1));			
+		while (c1.moveToNext()) {
+			nomesPagamento.add(c1.getString(1));			
 		}
 
-		c.close();
+		c1.close();
 		// Cria um ArrayAdapter usando um padrão de layout da classe R do
 		// android, passando o ArrayList nomes
 		arrayAdapterPagamento = new ArrayAdapter<String>(this, R.layout.spinner_item, nomesPagamento);

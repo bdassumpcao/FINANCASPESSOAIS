@@ -8,6 +8,9 @@
     <string name="sitaucaopago">Pago</string>
     <string name="situacaoavencer">A vencer</string>
     <string name="categoria">Categoria</string>
+    <string name="categoria2">Categoria: </string>
+    <string name="formaPagamento">Forma de Pagamento</string>
+    <string name="formaPagamento2">Forma de Pagamento: </string>
     <string name="ReceitaOuDespesa">Receita ou Despesa</string>
     <string name="Situacao">Situação</string>
 

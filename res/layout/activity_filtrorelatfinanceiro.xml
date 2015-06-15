@@ -108,6 +108,24 @@
         android:spinnerMode="dialog" >
 
     </Spinner>
+    
+        <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:text="@string/formaPagamento"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/pagamentosel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:spinnerMode="dialog" >
+
+    </Spinner>
 
     <TextView
         android:id="@+id/textView4"
