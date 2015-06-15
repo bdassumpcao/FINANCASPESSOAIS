@@ -4,276 +4,299 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
      >
-
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-        <LinearLayout
+        <TableRow
+            android:id="@+id/tableRow1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-
-            <TableRow
-                android:id="@+id/tableRow1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-                
-	            <TextView
-	                android:id="@+id/textView1"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_margin="1dp"
-	                android:text="Descrição do Lancamento"
-	                android:textSize="18sp"
-	                android:textStyle="bold" />
-	         
-	         </TableRow>
-
-             <TableRow
-                 android:id="@+id/tableRow2"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_margin="5dp" >
-
-	            <EditText
-	                android:id="@+id/edthistorico"
-	                android:layout_width="match_parent"
-	                android:layout_height="match_parent"
-	                android:layout_margin="1dp"
-	                android:background="@drawable/edittext"
-	                android:ems="10"
-	                android:inputType="textMultiLine"
-	                android:padding="7dp"
-	                android:textSize="18sp" >
-
-	                <requestFocus android:layout_width="wrap_content" />
-	
-	            </EditText>
-            
-            </TableRow>
+            android:layout_height="wrap_content" >
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="" />
+                android:layout_margin="1dp"
+                android:text="Descrição do Lancamento"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </TableRow>
 
-            <TableRow
-                android:id="@+id/tableRow3"
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp" >
+
+            <EditText
+                android:id="@+id/edthistorico"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:background="@drawable/edittext"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:padding="7dp"
+                android:textSize="18sp" />
+        </TableRow>
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
-                    android:layout_weight="0.5"
-                    android:text="Valor"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
-                    android:layout_weight="0.22"
-                    android:text="Data do Lançamento"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" 
-                >
-
-                <EditText
-                    android:id="@+id/edtvalor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="1dp"
-                    android:layout_weight="0.2"
-                    android:background="@drawable/edittext"
-                    android:ems="10"
-                    android:inputType="numberDecimal"
-                    android:padding="7dp"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/btdata"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
-                    android:layout_weight="0.5"
-                    android:background="@drawable/button"
-                    android:onClick="selecionarDataLancamento"
-                    android:text="01/01/2000" />
-
-            </TableRow>
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="" />
-
-            <TableRow
-                android:id="@+id/tableRow5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
-                    android:layout_weight="1.8"
-                    android:text="@string/categoria"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-
-                <Spinner
-                    android:id="@+id/categoria"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="1dp"
-                    android:layout_weight="0.2"
-                    android:background="@color/branco"
-                    android:spinnerMode="dialog" >
-
-                </Spinner>
-                
-	           <Button
-	               android:id="@+id/button15"
-	               style="@drawable/button"
-	               android:layout_width="match_parent"
-	               android:layout_height="wrap_content"
-	               android:layout_margin="1dp"
-	               android:layout_weight="0.9"
-	               android:background="@drawable/cadascatego"
-	               android:height="10dp"
-	               android:onClick="cadCategoria"
-	               android:paddingBottom="20dp"
-	               android:width="10dp" />
-
-            </TableRow>
+                android:layout_margin="1dp"
+                android:layout_weight="0.5"
+                android:text="Valor"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="" />
-            
-            <TableLayout
+                android:layout_margin="1dp"
+                android:layout_weight="0.22"
+                android:text="Data do Lançamento"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:id="@+id/edtvalor"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:layout_weight="0.2"
+                android:background="@drawable/edittext"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:padding="7dp"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btdata"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
-          
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight="0.5"
+                android:background="@drawable/button"
+                android:onClick="selecionarDataLancamento"
+                android:text="01/01/2000" />
+        </TableRow>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight="1.8"
+                android:text="@string/categoria"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Spinner
+                android:id="@+id/categoria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight="0.2"
+                android:background="@color/branco"
+                android:spinnerMode="dialog" />
+
+            <Button
+                android:id="@+id/button15"
+                style="@drawable/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight="0.9"
+                android:background="@drawable/cadascatego"
+                android:height="10dp"
+                android:onClick="cadCategoria"
+                android:paddingBottom="20dp"
+                android:width="10dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight="1.8"
+                android:text="Forma de Pagamento"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </TableRow>
+        
+        <TableRow
+            android:id="@+id/tableRow14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Spinner
+                android:id="@+id/pagamento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight="0.2"
+                android:background="@color/branco"
+                android:spinnerMode="dialog" />
+
+            <Button
+                android:id="@+id/button16"
+                style="@drawable/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:layout_weight="0.9"
+                android:background="@drawable/cadascatego"
+                android:height="10dp"
+                android:onClick="cadPagamento"
+                android:paddingBottom="20dp"
+                android:width="10dp" />
+        </TableRow>
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
             <TableRow
                 android:id="@+id/tableRow7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal" >
-	                
-	            <TextView
-	                android:id="@+id/textView10"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_margin="1dp"
-	                android:layout_weight="1.8"
-	                android:text="Tipo do Lancamento"
-	                android:textSize="18sp"
-	                android:textStyle="bold" />
-	            
-	         </TableRow>
-	            
-				<TableRow
-	                android:id="@+id/tableRow8"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content" >
-	
-		            <RadioGroup
-		                android:id="@+id/rgreceitadespesa"
-		                android:layout_width="match_parent"
-		                android:layout_height="match_parent"
-		                android:layout_margin="1dp"
-		                android:layout_weight="0.5"
-		                android:background="@color/branco"
-		                android:orientation="horizontal" >
-		
-		                <RadioButton
-		                    android:id="@+id/rgdespesa"
-		                    android:layout_width="wrap_content"
-		                    android:layout_height="wrap_content"
-		                    android:layout_margin="1dp"
-		                    android:layout_weight="0.5"
-		                    android:onClick="selecionarTipo"
-		                    android:text="(-) Pagamento"
-		                    android:textSize="18sp"
-		                    android:button="@null"
-		                    android:gravity="center"
-            				android:padding="5dp"
-		                    android:textColor="@drawable/rbtn_textcolor_selector" 
-		                    android:background="@drawable/rbtn_selector" />
-		
-		                <RadioButton
-		                    android:id="@+id/rgreceita"
-		                    android:layout_width="wrap_content"
-		                    android:layout_height="wrap_content"
-		                    android:layout_margin="1dp"
-		                    android:layout_weight="0.5"
-		                    android:onClick="selecionarTipo"
-		                    android:text="(+) Recebimento"
-		                    android:textSize="18sp"
-		                    android:button="@null" 
-		                    android:gravity="center"
-            				android:padding="5dp"
-		                    android:textColor="@drawable/rbtn_textcolor_selector"
-		                    android:background="@drawable/rbtn_selector" />
 
-		            </RadioGroup>
-				</TableRow>
-            </TableLayout>
-            
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="" />            
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1.8"
+                    android:text="Tipo do Lancamento"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </TableRow>
 
-            <TableLayout
-                android:id="@+id/tl_situacao"
+            <TableRow
+                android:id="@+id/tableRow8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
-                <TableRow
-                    android:id="@+id/tableRow9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                <RadioGroup
+                    android:id="@+id/rgreceitadespesa"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:layout_weight="0.5"
+                    android:background="@color/branco"
+                    android:orientation="horizontal" >
 
-                    <TextView
-                        android:id="@+id/textView8"
+                    <RadioButton
+                        android:id="@+id/rgdespesa"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="1dp"
-                        android:layout_weight="1.8"
-                        android:text="Situação do Título"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:layout_weight="0.5"
+                        android:background="@drawable/rbtn_selector"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:onClick="selecionarTipo"
+                        android:padding="5dp"
+                        android:text="(-) Pagamento"
+                        android:textColor="@drawable/rbtn_textcolor_selector"
+                        android:textSize="18sp" />
 
-                </TableRow>            
+                    <RadioButton
+                        android:id="@+id/rgreceita"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:layout_weight="0.5"
+                        android:background="@drawable/rbtn_selector"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:onClick="selecionarTipo"
+                        android:padding="5dp"
+                        android:text="(+) Recebimento"
+                        android:textColor="@drawable/rbtn_textcolor_selector"
+                        android:textSize="18sp" />
+                </RadioGroup>
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TableLayout
+            android:id="@+id/tl_situacao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TableRow
+                android:id="@+id/tableRow9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1.8"
+                    android:text="Situação do Título"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </TableRow>
 
             <TableRow
                 android:id="@+id/tableRow10"
@@ -295,14 +318,14 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="1dp"
                         android:layout_weight="0.5"
+                        android:background="@drawable/rbtn_selector"
+                        android:button="@null"
+                        android:gravity="center"
                         android:onClick="selecionarSituacao"
+                        android:padding="5dp"
                         android:text="Pago"
-                        android:textSize="18sp"
-                        android:button="@null" 
-		                android:gravity="center"
-            			android:padding="5dp"
-		                android:textColor="@drawable/rbtn_textcolor_selector"
-		                android:background="@drawable/rbtn_selector" />
+                        android:textColor="@drawable/rbtn_textcolor_selector"
+                        android:textSize="18sp" />
 
                     <RadioButton
                         android:id="@+id/rgsituacaoavencer"
@@ -310,88 +333,83 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="1dp"
                         android:layout_weight="0.5"
+                        android:background="@drawable/rbtn_selector"
+                        android:button="@null"
+                        android:gravity="center"
                         android:onClick="selecionarSituacao"
+                        android:padding="5dp"
                         android:text="A Pagar"
-                        android:textSize="18sp"
-                        android:button="@null" 
-		                android:gravity="center"
-            			android:padding="5dp"
-		                android:textColor="@drawable/rbtn_textcolor_selector"
-		                android:background="@drawable/rbtn_selector" />
-
+                        android:textColor="@drawable/rbtn_textcolor_selector"
+                        android:textSize="18sp" />
                 </RadioGroup>
             </TableRow>
-            </TableLayout>
-            
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="" />
+        </TableLayout>
 
-           <TableLayout
-               android:id="@+id/tl_vencimento"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:visibility="invisible" >
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-               <TableRow
-                   android:id="@+id/tableRow11"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content"  >
-                
-	               <TextView
-	                   android:id="@+id/textView12"
-	                   android:layout_width="wrap_content"
-	                   android:layout_height="wrap_content"
-	                   android:layout_margin="1dp"
-	                   android:text="Data Vencimento"
-	                   android:textSize="18sp"
-	                   android:textStyle="bold" />
-					
-			    </TableRow>
-			    
-               <TableRow
-                   android:id="@+id/tableRow12"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content" >
+        <TableLayout
+            android:id="@+id/tl_vencimento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible" >
 
-                   <Button
-                       android:id="@+id/btdtvenciento"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_margin="1dp"
-                       android:background="@drawable/button"
-                       android:onClick="selecionarDataVencimento"
-                       android:text="01/01/2000" />
+            <TableRow
+                android:id="@+id/tableRow11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-               </TableRow>
-           </TableLayout>
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:text="Data Vencimento"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </TableRow>
 
-           		<TextView
-		                android:id="@+id/textView13"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content"
-		                android:text="" />
-           
-	            <TableRow
-	                android:id="@+id/tableRow13"
-	                android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:gravity="center_horizontal" >
-	            
-	                	<Button
-	                	    android:id="@+id/imageView2"
-	                	    android:layout_width="match_parent"
-	                	    android:layout_height="match_parent"
-	                	    android:layout_margin="2dp"
-	                	    android:onClick="InserirDespesa"
-	                	    android:text="Inserir"
-	                	    android:background="@drawable/button" />
+            <TableRow
+                android:id="@+id/tableRow12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-           	</TableRow>
-            
-        </LinearLayout>
+                <Button
+                    android:id="@+id/btdtvenciento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:background="@drawable/button"
+                    android:onClick="selecionarDataVencimento"
+                    android:text="01/01/2000" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TableRow
+            android:id="@+id/tableRow13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" >
+
+            <Button
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="2dp"
+                android:background="@drawable/button"
+                android:onClick="InserirDespesa"
+                android:text="Inserir" />
+        </TableRow>
+    </LinearLayout>
+
+
         
     </ScrollView>
 

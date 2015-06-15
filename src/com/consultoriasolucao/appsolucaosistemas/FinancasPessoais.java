@@ -46,10 +46,24 @@ public class FinancasPessoais extends Activity {
 			
 		}
 		cursor.close();
+		db.close();
 		
+		db = helper.getReadableDatabase();
+		Cursor cursor1 = db.rawQuery("SELECT _id, ds_pagamento FROM pagamento",	null);
 		
-		
-		
+		if (cursor1.getCount() == 0) //caso ainda nao tenha nehuma categoria cadastrada então cadastra 
+		{
+			SQLiteDatabase dbexec = helper.getWritableDatabase();
+			dbexec.execSQL("INSERT INTO pagamento (ds_pagamento) values ('A VISTA'); ");
+			dbexec.execSQL("INSERT INTO pagamento (ds_pagamento) values ('BOLETO'); ");
+			dbexec.execSQL("INSERT INTO pagamento (ds_pagamento) values ('CHEQUE'); ");
+			dbexec.execSQL("INSERT INTO pagamento (ds_pagamento) values ('CARTAO'); ");
+			dbexec.execSQL("INSERT INTO pagamento (ds_pagamento) values ('DEPOSITO BANCARIO'); ");
+			dbexec.execSQL("INSERT INTO pagamento (ds_pagamento) values ('OUTROS'); ");
+			dbexec.close();			
+		}
+		cursor1.close();
+		db.close();
 	}
 	
 	public void listCategoria(View view)
@@ -68,14 +82,14 @@ public class FinancasPessoais extends Activity {
 	}
 	
 	public void QuemSomos(View view){
-		startActivity(new Intent(this, QuemSomos.class));
+		startActivity(new Intent(this, ConsultaFormaPagamento.class));
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.solucao_sistemas, menu);
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getMenuInflater().inflate(R.menu.solucao_sistemas, menu);
+//		return true;
+//	}
 
 }

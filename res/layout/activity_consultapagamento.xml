@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+    
 	<TableLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
@@ -12,8 +12,7 @@
 		    <TableRow
 		            android:id="@+id/tableRow1"
 		            android:layout_width="match_parent"
-		            android:layout_height="wrap_content"
-		            android:gravity="center_horizontal">
+		            android:layout_height="wrap_content">
 		            
 				    <TextView
 				        android:id="@+id/textView1"
@@ -21,16 +20,16 @@
 				        android:layout_height="wrap_content"
 				        android:gravity="center_horizontal"
 				        android:layout_margin="15sp"
-				        android:text="Categorias Cadastradas"
+				        android:text="Formas de Pagamento Cadastradas"
 				        android:textSize="18sp"
 				        android:textStyle="bold" />
 			        
 			</TableRow>   
 
 	 </TableLayout>
-
+	 
      <ListView
-         android:id="@+id/listacagetoria"
+         android:id="@+id/listapagamento"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:layout_margin="1dp" >

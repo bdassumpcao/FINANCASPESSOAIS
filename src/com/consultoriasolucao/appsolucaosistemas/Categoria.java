@@ -37,10 +37,9 @@ public class Categoria extends Activity {
 		Boolean flagvalida = true;
 
 		if (edtds_categoria.getText().toString().equals("")) {
-			Toast.makeText(this, "Entre com a descrição",
-					Toast.LENGTH_LONG).show();
+			edtds_categoria.setError("Entre com a descrição");
+			edtds_categoria.requestFocus();
 			flagvalida = false;
-
 		}
 		
 		if (flagvalida)
@@ -53,18 +52,18 @@ public class Categoria extends Activity {
 		values.put("ds_categoria", this.edtds_categoria.getText().toString());
 		long resultado = db.insert("categoria", null, values);
 		Toast.makeText(this, "Registro salvo com sucesso!",
-				Toast.LENGTH_LONG).show();
+				Toast.LENGTH_SHORT).show();
 		
 		this.edtds_categoria.setText("");
 		}
 		
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.solucao_sistemas, menu);
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getMenuInflater().inflate(R.menu.solucao_sistemas, menu);
+//		return true;
+//	}
 
 }

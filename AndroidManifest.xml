@@ -40,7 +40,9 @@
         <activity android:name="com.consultoriasolucao.appsolucaosistemas.RelatorioFinanceiro"/>
         <activity android:name="com.consultoriasolucao.appsolucaosistemas.LancaReceita"/>
         <activity android:name="com.consultoriasolucao.appsolucaosistemas.ConsultaCagetoria"/>
+        <activity android:name="com.consultoriasolucao.appsolucaosistemas.ConsultaFormaPagamento"/>
         <activity android:name="com.consultoriasolucao.appsolucaosistemas.Categoria"/>
+        <activity android:name="com.consultoriasolucao.appsolucaosistemas.FormaDePagamento"/>
         <activity android:name="com.consultoriasolucao.appsolucaosistemas.FiltroRelatFinanceiro"/>                  
         <activity android:name="com.consultoriasolucao.appsolucaosistemas.GerenciarLocalizacao"/>              
                   

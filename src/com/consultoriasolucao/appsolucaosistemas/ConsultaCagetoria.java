@@ -38,7 +38,7 @@ OnItemClickListener{
 	private ListView lista;
 
 	private DatabaseHelper db;
-	private List<Map<String, String>> produtos;
+	private List<Map<String, String>> categorias;
 
 
 	@Override
@@ -66,8 +66,6 @@ OnItemClickListener{
 	
 	}
 
-		
-	
 	
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
@@ -86,8 +84,8 @@ OnItemClickListener{
 	        	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
                 .getMenuInfo();
 	        	
-	        	String cd_categoria = produtos.get(info.position).get("cd_categoria");
-	        	produtos.remove(info.position);
+	        	String cd_categoria = categorias.get(info.position).get("cd_categoria");
+	        	categorias.remove(info.position);
 	        	lista.invalidateViews();
 	        	
 	        	 db.getWritableDatabase().execSQL("delete from categoria where _id ="+cd_categoria);
@@ -108,7 +106,7 @@ OnItemClickListener{
 				.rawQuery(
 						"select _id, ds_categoria from categoria order by ds_categoria",
 						null);
-		produtos = new ArrayList<Map<String, String>>();
+		categorias = new ArrayList<Map<String, String>>();
 		
 		while (c.moveToNext()) {
 			Map<String, String> mapa = new HashMap<String, String>();
@@ -116,25 +114,25 @@ OnItemClickListener{
 			mapa.put("cd_categoria",  c.getString(0));
 			mapa.put("ds_categoria",c.getString(1));
 			
-			produtos.add(mapa);
+			categorias.add(mapa);
 		}
 		
 		c.close();
 		
 				
 		
-		return produtos;
+		return categorias;
 	}
 
 
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.solucao_sistemas, menu);
-		return true;
-
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getMenuInflater().inflate(R.menu.solucao_sistemas, menu);
+//		return true;
+//
+//	}
 
 	@Override
     public void onItemClick(AdapterView<?> parent, View view, int position,

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+		
+	    <TableRow
+	        android:id="@+id/tableRow1"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:background="@color/skyBlue"
+	        android:gravity="center" >
+            
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="20dp"
+	            android:gravity="center_horizontal"
+	            android:text="Cadastro de Formas de Pagamento"
+	            android:textSize="18sp"
+	            android:textStyle="bold" />
+	            
+	   </TableRow>
+	  
+	    <TableRow
+	   	    android:id="@+id/tableRow2"
+	   	    android:layout_width="match_parent"
+	   	    android:layout_height="wrap_content"
+	   	    android:layout_margin="5dp"
+	   	    android:gravity="center_horizontal" >
+
+	        <TextView
+	            android:id="@+id/textView2"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="1dp"
+	            android:layout_weight="1"
+	            android:text="Nome:"
+	            android:textSize="18sp"
+	            android:textStyle="bold" />
+
+	        <EditText
+	            android:id="@+id/edtds_formapagamento"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_margin="1dp"
+	            android:background="@drawable/edittext"
+	            android:ems="10"
+	            android:inputType="textMultiLine"
+	            android:padding="7dp" />
+
+    	</TableRow>
+    	
+	   	<TableRow
+	   	    android:id="@+id/tableRow3"
+	   	    android:layout_width="match_parent"
+	   	    android:layout_height="wrap_content"
+	   	    android:layout_margin="5dp"
+	   	    android:gravity="center_horizontal" >
+	        
+	    <Button
+	        android:id="@+id/imageView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/textView1"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_margin="1dp"
+	        android:background="@drawable/button"
+	        android:onClick="inserirFormaDePagamento"
+	        android:text="Inserir" />
+	    
+	    </TableRow>
+
+	</TableLayout>
+</RelativeLayout>
