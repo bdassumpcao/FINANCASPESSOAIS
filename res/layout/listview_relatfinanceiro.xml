@@ -11,10 +11,12 @@
         android:orientation="horizontal"
         android:background="@color/categoria_outros" >            
         
-        <TextView android:id="@+id/dt_lancamento"
+        <TextView
+            android:id="@+id/dt_lancamento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.50"  />
+            android:layout_weight="0.50"
+            android:textStyle="bold" />
         
          <TextView android:id="@+id/cd_lancamentolist"
             android:layout_width="wrap_content"
@@ -99,7 +101,8 @@
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="0.50"
-	            android:layout_gravity="left" />
+	            android:layout_gravity="left"
+	            android:textStyle="bold" />
 	            	
 	    	<TextView
 	    	    android:id="@+id/vl_lancamento"

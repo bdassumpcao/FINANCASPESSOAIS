@@ -3,9 +3,9 @@
 	<stroke 
 	    android:color="@color/titulo"
 	    android:width="1dp"/>
-	<solid android:color="@color/PRATA"/>
+	<solid android:color="@color/branco"/>
 	
 	<corners 
-	    android:radius="8dp"/>
+	    android:radius="6dp"/>
 
 </shape>

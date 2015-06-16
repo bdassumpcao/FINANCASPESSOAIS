@@ -20,6 +20,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
@@ -64,6 +65,8 @@ public class LancaDespesa extends Activity {
     private TableLayout tl_situacao;
     private TableLayout tl_vencimento;
     private String straux;
+    private int cat_position;
+    private int pag_position;
     ArrayAdapter<String> arrayAdapterCategoria;
     ArrayAdapter<String> arrayAdapterPagamento;
 
@@ -139,32 +142,53 @@ public class LancaDespesa extends Activity {
 				} else 
 				{
 					rgsituacaopago.setChecked(false);	
-					rgsituacaoapagar.setChecked(true);					
+					rgsituacaoapagar.setChecked(true);	
+					tl_vencimento.setVisibility(View.VISIBLE);
 				}
 				
 				
-				if (cursor.getString(9).equals("D")) //caso a situação seja pago
+				if (cursor.getString(9).equals("D")) //caso o tipo seja despesa
 				{
 					rgreceita.setChecked(false);	
 					rgdespesa.setChecked(true);
+					rgsituacaopago.setText("Pago");
+					rgsituacaoapagar.setText("A Pagar");
+					rgsituacaoapagar.setBackgroundResource(R.drawable.rbtn_selector2);
+					rgsituacaoapagar.setTextColor(R.drawable.rbtn_textcolor_selector2);
+					rgsituacaopago.setBackgroundResource(R.drawable.rbtn_selector2);
+					rgsituacaopago.setTextColor(R.drawable.rbtn_textcolor_selector2);
 				} else 
 				{
 					rgreceita.setChecked(true);	
 					rgdespesa.setChecked(false);
-					
+					rgsituacaopago.setText("Recebido");
+					rgsituacaoapagar.setText("A Receber");
+					rgsituacaoapagar.setBackgroundResource(R.drawable.rbtn_selector);
+					rgsituacaoapagar.setTextColor(R.drawable.rbtn_textcolor_selector);
+					rgsituacaopago.setBackgroundResource(R.drawable.rbtn_selector);
+					rgsituacaopago.setTextColor(R.drawable.rbtn_textcolor_selector);
 				}
 				
 				//verificando qual item do sppiner Categoria foi selecinado	
 				straux = cursor.getString(10);			
-				int spinnerPosition = arrayAdapterCategoria.getPosition(straux);
-				categoria.setSelection(spinnerPosition);	
-				Log.i("financas", cursor.getString(10)+" "+spinnerPosition);
+				final int spinnerPosition = arrayAdapterCategoria.getPosition(straux);
+				cat_position = spinnerPosition;
+				new Handler().postDelayed(new Runnable() {        
+				    public void run() {
+				    	categoria.setSelection(spinnerPosition, true);
+				    }
+				  }, 100);
+
 				
 				//verificando qual item do sppiner Formas de Pagamento foi selecinado	
-				String s = cursor.getString(11);					
-				int spinnerPosition2 = arrayAdapterPagamento.getPosition(s);
-				pagamento.setSelection(spinnerPosition2);
-				Log.i("financas", cursor.getString(11)+" "+spinnerPosition2);
+				straux = cursor.getString(11);					
+				final int spinnerPosition2 = arrayAdapterPagamento.getPosition(straux);
+				pag_position = spinnerPosition2;
+				new Handler().postDelayed(new Runnable() {        
+				    public void run() {
+				    	pagamento.setSelection(spinnerPosition2, true);
+				    }
+				  }, 100);
 				 
 			}
 			cursor.close();
@@ -177,18 +201,26 @@ public class LancaDespesa extends Activity {
 		if(rgdespesa.isChecked()){
 			rgsituacaopago.setText("Pago");
 			rgsituacaoapagar.setText("A Pagar");
+			rgsituacaoapagar.setBackgroundResource(R.drawable.rbtn_selector2);
+			rgsituacaoapagar.setTextColor(R.drawable.rbtn_textcolor_selector2);
+			rgsituacaopago.setBackgroundResource(R.drawable.rbtn_selector2);
+			rgsituacaopago.setTextColor(R.drawable.rbtn_textcolor_selector2);
 //			tl_situacao.setVisibility(View.VISIBLE);
 		}
 		else if(rgreceita.isChecked()){
 			rgsituacaopago.setText("Recebido");
 			rgsituacaoapagar.setText("A Receber");
+			rgsituacaoapagar.setBackgroundResource(R.drawable.rbtn_selector);
+			rgsituacaoapagar.setTextColor(R.drawable.rbtn_textcolor_selector);
+			rgsituacaopago.setBackgroundResource(R.drawable.rbtn_selector);
+			rgsituacaopago.setTextColor(R.drawable.rbtn_textcolor_selector);
 //			tl_situacao.setVisibility(View.VISIBLE);
 		}
 	}
 	
 	public void selecionarSituacao(View view){
 		if(rgsituacaoapagar.isChecked()){			
-			tl_vencimento.setVisibility(View.VISIBLE);
+			tl_vencimento.setVisibility(View.VISIBLE);			
 		}
 		else if(rgsituacaopago.isChecked()){
 			tl_vencimento.setVisibility(View.INVISIBLE);
@@ -437,7 +469,18 @@ public class LancaDespesa extends Activity {
 	public void onResume(){
 		super.onResume();
 		carregaSpinnerCategoria();
+		new Handler().postDelayed(new Runnable() {        
+		    public void run() {
+		    	categoria.setSelection(cat_position, true);
+		    }
+		  }, 100);
+		
 		carregaSpinnerPagamento();
+		new Handler().postDelayed(new Runnable() {        
+		    public void run() {
+		    	pagamento.setSelection(pag_position, true);
+		    }
+		  }, 100);
 	}
 
 }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-     >
+    android:background="@color/LightGrey" >
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
@@ -236,7 +236,6 @@
                     android:layout_height="match_parent"
                     android:layout_margin="1dp"
                     android:layout_weight="0.5"
-                    android:background="@color/branco"
                     android:orientation="horizontal" >
 
                     <RadioButton
@@ -245,13 +244,13 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="1dp"
                         android:layout_weight="0.5"
-                        android:background="@drawable/rbtn_selector"
+                        android:background="@drawable/rbtn_selector2"
                         android:button="@null"
                         android:gravity="center"
                         android:onClick="selecionarTipo"
                         android:padding="5dp"
                         android:text="(-) Pagamento"
-                        android:textColor="@drawable/rbtn_textcolor_selector"
+                        android:textColor="@drawable/rbtn_textcolor_selector2"
                         android:textSize="18sp" />
 
                     <RadioButton
@@ -309,7 +308,6 @@
                     android:layout_height="fill_parent"
                     android:layout_margin="1dp"
                     android:layout_weight="0.5"
-                    android:background="@color/branco"
                     android:orientation="horizontal" >
 
                     <RadioButton
