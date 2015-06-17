@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -20,10 +21,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -41,7 +44,7 @@ public class ConsultaCagetoriaFragment extends Fragment implements
 OnItemClickListener{
 
 	private ListView lista;
-
+	private Button inserirCat;
 	private DatabaseHelper db;
 	private List<Map<String, String>> categorias;
 	
@@ -54,6 +57,7 @@ OnItemClickListener{
             Bundle savedInstanceState) {
   
         View rootView = inflater.inflate(R.layout.activity_consultacategoria, container, false);
+        inserirCat = (Button) rootView.findViewById(R.id.inserirCat);
         lista = (ListView) rootView.findViewById(R.id.listacagetoria);
 		lista.setOnItemClickListener(this);
 		registerForContextMenu(lista); 
@@ -65,6 +69,15 @@ OnItemClickListener{
 				R.layout.listview_categoria, de, para);
 
 		lista.setAdapter(adapter);
+		
+		
+        inserirCat.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				MostrarFragment();
+			}
+		});
 	
 		
         return rootView;
@@ -82,14 +95,19 @@ OnItemClickListener{
 
 	}
 
-	
-//	@Override
-//	public void onCreateContextMenu(ContextMenu menu, View v,
-//	ContextMenuInfo menuInfo) {
-//	MenuInflater inflater = getMenuInflater();
-//	inflater.inflate(R.menu.menu_categoria, menu);
-//	}
 
+	public void MostrarFragment(){
+		Fragment fragment = new CategoriaFragment();
+		getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+	}
+	
+	 @Override
+	    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	        super.onCreateContextMenu(menu, v, menuInfo);
+	        menu.add(Menu.NONE, R.id.remover_categoria, Menu.NONE, "Remover Categoria");
+	    }
+	 
 	
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
@@ -153,7 +171,8 @@ OnItemClickListener{
 	@Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                     long id) {
-          
     }
-
 }
+
+
+

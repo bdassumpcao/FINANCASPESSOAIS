@@ -1,13 +1,17 @@
 package com.consultoriasolucao.appsolucaosistemas;
 
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -29,6 +33,20 @@ public class PagamentoFragment extends Fragment{
         View rootView = inflater.inflate(R.layout.activity_formadepagamento, container, false);
 		this.edtds_formaPagamento = (EditText) rootView.findViewById(R.id.edtds_formapagamento);
 	
+//		getView().setOnKeyListener( new OnKeyListener()
+//		{
+//		    @Override
+//		    public boolean onKey( View v, int keyCode, KeyEvent event )
+//		    {
+//		        if( keyCode == KeyEvent.KEYCODE_BACK )
+//		        {
+//		        	MostrarFragment();
+//		            return true;
+//		        }
+//		        return false;
+//		    }
+//		} );
+		
 		
         return rootView;
     }
@@ -62,7 +80,26 @@ public class PagamentoFragment extends Fragment{
 		long resultado = db.insert("pagamento", null, values);
 		
 		this.edtds_formaPagamento.setText("");
+		MostrarFragment();
+		
 		}
 		
 	}
+	
+	public void MostrarFragment(){
+		Fragment fragment = new ConsultaPagamentoFragment();
+		getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+	}
+	
+//	  @Override
+//	    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//	        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+//				MostrarFragment();
+//	            return true;
+//	        }
+//	        return super.onKeyDown(keyCode, event);
+//	    }
+	
+
+	  
 }

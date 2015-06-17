@@ -77,15 +77,14 @@ public class CategoriaFragment extends Fragment {
 
 		
 		this.edtds_categoria.setText("");
+		MostrarFragment();
 		}
 		
 	}
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.solucao_sistemas, menu);
-//		return true;
-//	}
+	public void MostrarFragment(){
+		Fragment fragment = new ConsultaCagetoriaFragment();
+		getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+	}
 
 }

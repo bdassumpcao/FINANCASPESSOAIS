@@ -13,7 +13,7 @@
 		            android:id="@+id/tableRow1"
 		            android:layout_width="match_parent"
 		            android:layout_height="wrap_content"
-		            android:gravity="center_horizontal">
+		            android:gravity="center">
 		            
 				    <TextView
 				        android:id="@+id/textView1"
@@ -24,6 +24,17 @@
 				        android:text="Categorias Cadastradas"
 				        android:textSize="18sp"
 				        android:textStyle="bold" />
+				    
+				    <Button
+		            android:id="@+id/inserirCat"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_marginLeft="50dp"
+		            android:layout_weight="0.1"
+		            android:background="@drawable/button"
+		            android:text="+"
+		            android:textSize="20sp"
+		            android:textStyle="bold" />
 			        
 			</TableRow>   
 

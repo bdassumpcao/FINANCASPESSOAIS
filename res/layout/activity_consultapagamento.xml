@@ -9,10 +9,11 @@
 	    android:layout_height="wrap_content"
 	    android:background="@color/skyBlue" >
 	    
-		    <TableRow
+ <TableRow
 		            android:id="@+id/tableRow1"
 		            android:layout_width="match_parent"
-		            android:layout_height="wrap_content">
+		            android:layout_height="wrap_content"
+		            android:gravity="center">
 		            
 				    <TextView
 				        android:id="@+id/textView1"
@@ -20,11 +21,22 @@
 				        android:layout_height="wrap_content"
 				        android:gravity="center_horizontal"
 				        android:layout_margin="15sp"
-				        android:text="Formas de Pagamento Cadastradas"
+				        android:text="Formas de Pagamento"
 				        android:textSize="18sp"
 				        android:textStyle="bold" />
+				    
+				    <Button
+		            android:id="@+id/inserirPag"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_marginLeft="50dp"
+		            android:layout_weight="0.1"
+		            android:background="@drawable/button"
+		            android:text="+"
+		            android:textSize="20sp"
+		            android:textStyle="bold" />
 			        
-			</TableRow>   
+			</TableRow>     
 
 	 </TableLayout>
 	 

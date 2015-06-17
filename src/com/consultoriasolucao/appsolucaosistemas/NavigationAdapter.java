@@ -19,7 +19,7 @@ public class NavigationAdapter extends BaseAdapter {
        this.activity = activity;  
        this.arrayitms=listarray;
        }     
-   //Retorna objeto Item_objct del array list
+   //Retorna objeto Item_objct do arraylist
    @Override
    public Object getItem(int position) {       
        return arrayitms.get(position);
@@ -32,7 +32,7 @@ public class NavigationAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }   
-    //Declaramos clase estatica la cual representa a la fila
+    //Declaramos classe estática que representa a Fila
     public static class Fila  
     {  
     		TextView titulo_itm;
@@ -54,7 +54,7 @@ public class NavigationAdapter extends BaseAdapter {
            view.titulo_itm.setText(itm.getTitulo());           
            //icone
            view.icone = (ImageView) convertView.findViewById(R.id.icon);
-           //Seteo el icone
+           //Seta o icone
            view.icone.setImageResource(itm.getIcone());           
            convertView.setTag(view);  
         }  

@@ -41,17 +41,15 @@
 	 
          <!-- Lista de titulos de navegacion-->    
     <string-array name="nav_options">
-        <item>Home</item>
-        <item>Cadastro de Categoria</item>
-        <item>Consulta de Categoria</item>
-        <item>Cadastro Forma de Pagamento</item>
-        <item>Consulta Forma de Pagamento</item>        
+        <item>Resumo</item>
+        <item>Categorias</item>
+        <item>Formas de Pagamento</item>        
         <item>Pesquisar Lancamentos</item>
-        <item>Configuración</item>
-        <item>Compartir</item>
+        <item>Configuração</item>
+        <item>Compartilhar</item>
     </string-array>
     <!-- Lista de iconos de navegacion-->
-    <array name="navigation_iconos">
+    <array name="navigation_icones">
         <item>@drawable/ic_action_home</item>
         <item>@drawable/ic_action_user</item>
         <item>@drawable/ic_action_star</item>

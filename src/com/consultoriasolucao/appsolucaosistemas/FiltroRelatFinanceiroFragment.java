@@ -15,6 +15,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -34,6 +35,7 @@ public class FiltroRelatFinanceiroFragment extends Fragment {
 	
 	private Button btdtini;
 	private Button btdtfim;
+	private Button btn_buscarRelat;
 	private int ano, mes, dia;
 	static boolean flagdataini;
 	private DatabaseHelper db;
@@ -58,6 +60,7 @@ public class FiltroRelatFinanceiroFragment extends Fragment {
 		mes = calendar.get(Calendar.MONTH);
 		dia = calendar.get(Calendar.DAY_OF_MONTH);	
 		
+		btn_buscarRelat = (Button) rootView.findViewById(R.id.btn_buscarRelat);
         btdtini = (Button) rootView.findViewById(R.id.btdataini);
         btdtfim = (Button) rootView.findViewById(R.id.btdatafim);
 		btdtini.setText("01/" + (mes+1) + "/" + ano);
@@ -68,7 +71,21 @@ public class FiltroRelatFinanceiroFragment extends Fragment {
 		categoria = (Spinner) rootView.findViewById(R.id.categoriasel);
 		pagamento = (Spinner) rootView.findViewById(R.id.pagamentosel);
 		
-
+		btn_buscarRelat.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				filtro =btdtini.getText().toString()+"|"+btdtfim.getText().toString()+"|"+categoria.getSelectedItem().toString()+"|"+pagamento.getSelectedItem().toString()+"|"+situacao.getSelectedItem().toString()+"|"+ds_tipo.getSelectedItem().toString()+"|";
+				
+				Intent intent = new Intent(getActivity(), RelatorioFinanceiroFragment.class);
+				Log.i("financas", filtro);
+				intent.putExtra(RelatorioFinanceiroFragment.EXTRA_NOME_USUARIO, filtro);
+				getActivity().setIntent(intent);
+				Fragment fragment = new RelatorioFinanceiroFragment();
+				getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+				
+			}
+		});
 		
 		btdtini.setOnClickListener(new OnClickListener() {			
 			@Override
@@ -172,21 +189,7 @@ public class FiltroRelatFinanceiroFragment extends Fragment {
 		
 	}
 	
-	
-	
-	public void selecionarDataini(View view){
-		DialogFragment picker = new DatePickerFragment();
-		picker.show(getFragmentManager(), "datePicker");
-		 flagdataini = true;
-		}
-	
-	public void selecionarDatafim(View view){
-		DialogFragment picker = new DatePickerFragment();
-		picker.show(getFragmentManager(), "datePicker");
-		flagdataini = false;
-		}
-	
-	
+		
 	
 	private void showDatePicker() {
 	        DatePickerFragment date = new DatePickerFragment();
@@ -255,7 +258,8 @@ public class FiltroRelatFinanceiroFragment extends Fragment {
 		
 		Intent intent = new Intent(getActivity(), RelatorioFinanceiro.class);
 		intent.putExtra(RelatorioFinanceiro.EXTRA_NOME_USUARIO, filtro);
-		startActivity(intent);
+		getActivity().setIntent(intent);
+//		startActivity(intent);
 	}
 	
 	

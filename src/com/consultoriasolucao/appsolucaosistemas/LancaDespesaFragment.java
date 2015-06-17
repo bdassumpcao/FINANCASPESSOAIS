@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -23,20 +24,24 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
 @SuppressLint("SimpleDateFormat")
-public class LancaDespesa extends Activity {
+public class LancaDespesaFragment extends Fragment {
 
 	public static final String EXTRA_CD_LANCAMENTO = "AppSolucaoSistemas.EXTRA_CD_LANCAMENTO";
 	
@@ -47,6 +52,9 @@ public class LancaDespesa extends Activity {
 	private int ano, mes, dia;
 	private Button dataGasto;
 	private Button dataVencimento;
+	private Button btn_cadCategoria;
+	private Button btn_cadPagamento;
+	private Button btn_inserirDespesa;
 	private Spinner categoria;
 	private Spinner pagamento;
 	private List<String> nomesCategoria = new ArrayList<String>();
@@ -70,50 +78,97 @@ public class LancaDespesa extends Activity {
     ArrayAdapter<String> arrayAdapterCategoria;
     ArrayAdapter<String> arrayAdapterPagamento;
 
+    LancaDespesaFragment(){};
     
     
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_lancardespesa);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+  
+        View rootView = inflater.inflate(R.layout.activity_lancardespesa, container, false);	
+
+		this.edtvalor = (EditText) rootView.findViewById(R.id.edtvalor);
+		this.edthistorico = (EditText) rootView.findViewById(R.id.edthistorico);
+		this.radioGroup = (RadioGroup) rootView.findViewById(R.id.rgsituacao);
+		this.rgreceitadespesa = (RadioGroup) rootView.findViewById(R.id.rgreceitadespesa);
+		this.tl_situacao = (TableLayout) rootView.findViewById(R.id.tl_situacao);
+		this.tl_vencimento = (TableLayout) rootView.findViewById(R.id.tl_vencimento);
+		this.rgreceita = (RadioButton) rootView.findViewById(R.id.rgreceita);
+		this.rgdespesa = (RadioButton) rootView.findViewById(R.id.rgdespesa);
+		this.rgsituacaopago = (RadioButton) rootView.findViewById(R.id.rgsituacaopgo);
+		this.rgsituacaoapagar = (RadioButton) rootView.findViewById(R.id.rgsituacaoavencer);
+		this.categoria = (Spinner) rootView.findViewById(R.id.categoria);
+		this.pagamento = (Spinner) rootView.findViewById(R.id.pagamento);
+		this.btn_cadCategoria = (Button) rootView.findViewById(R.id.btn_cadCategoria);
+		this.btn_cadPagamento = (Button) rootView.findViewById(R.id.btn_cadPagamento);
+		this.btn_inserirDespesa = (Button) rootView.findViewById(R.id.btn_inserirDespesa);
 		
-		getActionBar().setDisplayShowHomeEnabled(false);
-		getActionBar().hide();
-		
-		db = new DatabaseHelper(this);
-
-		this.edtvalor = (EditText) findViewById(R.id.edtvalor);
-		this.edthistorico = (EditText) findViewById(R.id.edthistorico);
-		this.radioGroup = (RadioGroup) findViewById(R.id.rgsituacao);
-		this.rgreceitadespesa = (RadioGroup) findViewById(R.id.rgreceitadespesa);
-		this.tl_situacao = (TableLayout) findViewById(R.id.tl_situacao);
-		this.tl_vencimento = (TableLayout) findViewById(R.id.tl_vencimento);
-		this.rgreceita = (RadioButton) findViewById(R.id.rgreceita);
-		this.rgdespesa = (RadioButton) findViewById(R.id.rgdespesa);
-		this.rgsituacaopago = (RadioButton) findViewById(R.id.rgsituacaopgo);
-		this.rgsituacaoapagar = (RadioButton) findViewById(R.id.rgsituacaoavencer);
-		this.categoria = (Spinner) findViewById(R.id.categoria);
-		this.pagamento = (Spinner) findViewById(R.id.pagamento);
-
-
-        
 		Calendar calendar = Calendar.getInstance();
 		ano = calendar.get(Calendar.YEAR);
 		mes = calendar.get(Calendar.MONTH);
 		dia = calendar.get(Calendar.DAY_OF_MONTH);
-		dataGasto = (Button) findViewById(R.id.btdata);
+		dataGasto = (Button) rootView.findViewById(R.id.btdata);
 		dataGasto.setText(dia + "/" + (mes + 1) + "/" + ano);
-		dataVencimento = (Button) findViewById(R.id.btdtvencimento);
+		dataVencimento = (Button) rootView.findViewById(R.id.btdtvencimento);
 		dataVencimento.setText(dia + "/" + (mes + 1) + "/" + ano);
-
-
-		SQLiteDatabase dbexe = db.getReadableDatabase();
 		
+		
+		
+        dataGasto.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				showDatePicker();
+				datasel = "DataLancamento";
+			}
+		});
+        
+        dataVencimento.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				showDatePicker();
+				datasel = "DataVencimento";
+			}
+		});
+        
+        btn_cadCategoria.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Fragment fragment = new CategoriaFragment();
+				getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+			}
+		});
+        
+        btn_cadPagamento.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Fragment fragment = new PagamentoFragment();
+				getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+			}
+		});
+        
+        btn_inserirDespesa.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				InserirDespesa();
+			}
+		});
+        
 		carregaSpinnerCategoria();
 		carregaSpinnerPagamento();
 		
+		db = new DatabaseHelper(getActivity());
+
+		SQLiteDatabase dbexe = db.getReadableDatabase();
+		
+
+		
 		cd_lancamento=""; //codigo do lancamento e a flag para verificar se é edição ou inserção
-		Intent intent = getIntent();
+		Intent intent = getActivity().getIntent();
 		if (intent.hasExtra(EXTRA_CD_LANCAMENTO)) {//caso seja edição então carregando os campos
 
 			cd_lancamento = intent.getStringExtra(EXTRA_CD_LANCAMENTO);
@@ -193,6 +248,15 @@ public class LancaDespesa extends Activity {
 			}
 			cursor.close();
 		}
+        return rootView;
+    }
+    
+    
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+
 		
 
 	}
@@ -227,20 +291,26 @@ public class LancaDespesa extends Activity {
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
-	public void selecionarDataLancamento(View view) {
-		showDialog(view.getId());
-		datasel = "DataLancamento";
-
-	}
-
-	@SuppressWarnings("deprecation")
-	public void selecionarDataVencimento(View view) {
-		showDialog(view.getId());
-		datasel = "DataVencimento";
-	}
-
-	private OnDateSetListener listener = new OnDateSetListener() {
+	
+	private void showDatePicker() {
+        DatePickerFragment date = new DatePickerFragment();
+        /**
+        * Set Up Current Date Into dialog
+        */
+        Calendar calender = Calendar.getInstance();
+        Bundle args = new Bundle();
+        args.putInt("year", calender.get(Calendar.YEAR));
+        args.putInt("month", calender.get(Calendar.MONTH));
+        args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
+        date.setArguments(args);
+        /**
+        * Set Call back to capture selected date
+        */
+        date.setCallBack(ondate);
+        date.show(getFragmentManager(), "Date Picker");
+}
+	
+	private OnDateSetListener ondate = new OnDateSetListener() {
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
@@ -255,19 +325,8 @@ public class LancaDespesa extends Activity {
 		}
 	};
 
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		if (R.id.btdata == id) {
-			return new DatePickerDialog(this, listener, ano, mes, dia);
-		}
 
-		if (R.id.btdtvencimento == id) {
-			return new DatePickerDialog(this, listener, ano, mes, dia);
-		}
-		return null;
-	}
-
-	public void InserirDespesa(View view) {
+	public void InserirDespesa() {
 		flagvalida = true;
 
 		
@@ -287,14 +346,14 @@ public class LancaDespesa extends Activity {
 		
 		else if (categoria.getSelectedItem().toString().equals("SELECIONE")){
 			categoria.requestFocus();
-			Toast.makeText(this, "Entre com a Categoria!",
+			Toast.makeText(getActivity(), "Entre com a Categoria!",
 					Toast.LENGTH_LONG).show();
 			flagvalida = false;
 		}
 		
 		else if (pagamento.getSelectedItem().toString().equals("SELECIONE")){
 			pagamento.requestFocus();
-			Toast.makeText(this, "Entre com a Forma de Pagamento!",
+			Toast.makeText(getActivity(), "Entre com a Forma de Pagamento!",
 					Toast.LENGTH_LONG).show();
 			flagvalida = false;
 		}
@@ -350,7 +409,7 @@ public class LancaDespesa extends Activity {
 			
 			
 			String cd_cat = categoria.getSelectedItem().toString();
-			db = new DatabaseHelper(this);
+			db = new DatabaseHelper(getActivity());
 			SQLiteDatabase d = db.getReadableDatabase();			
 			Cursor cursor1 = d.rawQuery(
 					"SELECT _id FROM categoria where ds_categoria=\""+ cd_cat +"\" order by ds_categoria", null);
@@ -361,7 +420,7 @@ public class LancaDespesa extends Activity {
 			
 			
 			String cd_pag = pagamento.getSelectedItem().toString();
-			db = new DatabaseHelper(this);			
+			db = new DatabaseHelper(getActivity());			
 			SQLiteDatabase d1 = db.getReadableDatabase();			
 			Cursor cursor2 = d1.rawQuery(
 					"SELECT _id FROM pagamento where ds_pagamento=\""+ cd_pag +"\" order by ds_pagamento", null);
@@ -375,10 +434,12 @@ public class LancaDespesa extends Activity {
 			edthistorico.setText("");
 			edtvalor.setText("");
 			
-			Toast.makeText(this, "Lançamento salvo com sucesso!",
+			Toast.makeText(getActivity(), "Lançamento salvo com sucesso!",
 					Toast.LENGTH_LONG).show();
 			
-			LancaDespesa.this.finish();
+			Fragment fragment = new FiltroRelatFinanceiroFragment();
+			getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+			
 		}
 	}
 	
@@ -395,20 +456,11 @@ public class LancaDespesa extends Activity {
 	    return convertedDate;
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		
-	}
+//	@Override
+//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		
+//	}
 
-	public void cadCategoria(View view)
-	{
-		startActivity(new Intent(this, Categoria.class));
-	}
-	
-	public void cadPagamento(View view)
-	{
-		startActivity(new Intent(this, FormaDePagamento.class));
-	}
 
 	public void carregaSpinnerCategoria(){
 		nomesCategoria.clear();
@@ -422,7 +474,7 @@ public class LancaDespesa extends Activity {
 		c.close();
 		// Cria um ArrayAdapter usando um padrão de layout da classe R do
 		// android, passando o ArrayList nomes
-		arrayAdapterCategoria = new ArrayAdapter<String>(this, R.layout.spinner_item, nomesCategoria);
+		arrayAdapterCategoria = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, nomesCategoria);
 		ArrayAdapter<String> spinnerArrayAdapter = arrayAdapterCategoria;
 		spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 		
@@ -441,7 +493,7 @@ public class LancaDespesa extends Activity {
 		c1.close();
 		// Cria um ArrayAdapter usando um padrão de layout da classe R do
 		// android, passando o ArrayList nomes
-		arrayAdapterPagamento = new ArrayAdapter<String>(this, R.layout.spinner_item, nomesPagamento);
+		arrayAdapterPagamento = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, nomesPagamento);
 		ArrayAdapter<String> spinnerArrayAdapter2 = arrayAdapterPagamento;
 		spinnerArrayAdapter2.setDropDownViewResource(R.layout.spinner_dropdown_item);
 		

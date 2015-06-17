@@ -1,6 +1,7 @@
 package com.consultoriasolucao.appsolucaosistemas;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class FinancasPessoais extends Activity {
+	public Intent intent = null;
 	private DatabaseHelper helper;
     private String[] titulos;
     private DrawerLayout NavDrawerLayout;
@@ -34,13 +36,28 @@ public class FinancasPessoais extends Activity {
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    NavigationAdapter NavAdapter; 
+    NavigationAdapter NavAdapter;
+    public static final String EXTRA_NOME_USUARIO = "AppSolucaoSistemas.EXTRA_NOME_USUARIO";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);		
+		setContentView(R.layout.main);	
 
+		
+			
+			Calendar calendar = Calendar.getInstance();
+			int ano = calendar.get(Calendar.YEAR);
+			int mes = calendar.get(Calendar.MONTH);
+			int dia = calendar.get(Calendar.DAY_OF_MONTH);	
+			String dtini = "01/" + (mes+1) + "/" + ano;
+			String dtfim = dia + "/" + (mes+1) + "/" + ano;
+			String filtro = dtini+"|"+dtfim+"|TODOS|TODOS|TODOS|TODOS|";
+			Log.i("financas", "filtro inicial: "+filtro);
+			Intent intent = new Intent(this, RelatorioFinanceiroFragment.class);
+			intent.putExtra(RelatorioFinanceiroFragment.EXTRA_NOME_USUARIO, filtro);
+			setIntent(intent);			
+		
 		//Drawer Layout
 		NavDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		//Lista
@@ -50,7 +67,7 @@ public class FinancasPessoais extends Activity {
         //Establecemos header
         NavList.addHeaderView(header);
 		//Tomamos listado  de imgs desde drawable
-        NavIcons = getResources().obtainTypedArray(R.array.navigation_iconos);			
+        NavIcons = getResources().obtainTypedArray(R.array.navigation_icones);			
 		//Tomamos listado  de titulos desde el string-array de los recursos @string/nav_options
         titulos = getResources().getStringArray(R.array.nav_options);
         //Listado de titulos de barra de navegacion
@@ -64,12 +81,10 @@ public class FinancasPessoais extends Activity {
         NavItms.add(new Item_objct(titulos[2], NavIcons.getResourceId(2, -1)));
         //Lugares
         NavItms.add(new Item_objct(titulos[3], NavIcons.getResourceId(3, -1)));
-        //Etiquetas
-        NavItms.add(new Item_objct(titulos[4], NavIcons.getResourceId(4, -1)));
         //Configuracion
-        NavItms.add(new Item_objct(titulos[5], NavIcons.getResourceId(5, -1)));
+        NavItms.add(new Item_objct(titulos[4], NavIcons.getResourceId(5, -1)));
         //Share
-        NavItms.add(new Item_objct(titulos[6], NavIcons.getResourceId(6, -1)));
+        NavItms.add(new Item_objct(titulos[5], NavIcons.getResourceId(6, -1)));
       
         //Declaramos y seteamos nuestro adaptador al cual le pasamos el array con los titulos	       
         NavAdapter= new NavigationAdapter(this,NavItms);
@@ -112,7 +127,7 @@ public class FinancasPessoais extends Activity {
         });
         
         //Cuando la aplicacion cargue por defecto mostrar la opcion Home
-        MostrarFragment(1);
+        MostrarFragment(4);
         
         
 		
@@ -161,24 +176,24 @@ public class FinancasPessoais extends Activity {
 		db.close();
 	}
 	
-	public void listCategoria(View view)
-	{
-		startActivity(new Intent(this, ConsultaCagetoria.class));
-	}
-
-	public void cadCategoria(View view)
-	{
-		startActivity(new Intent(this, Categoria.class));
-	}
-	
-	public void relatorioFinanceiro(View view)
-	{
-		startActivity(new Intent(this,FiltroRelatFinanceiro.class));
-	}
-	
-	public void QuemSomos(View view){
-		startActivity(new Intent(this, ConsultaFormaPagamento.class));
-	}
+//	public void listCategoria(View view)
+//	{
+//		startActivity(new Intent(this, ConsultaCagetoria.class));
+//	}
+//
+//	public void cadCategoria(View view)
+//	{
+//		startActivity(new Intent(this, Categoria.class));
+//	}
+//	
+//	public void relatorioFinanceiro(View view)
+//	{
+//		startActivity(new Intent(this,FiltroRelatFinanceiro.class));
+//	}
+//	
+//	public void QuemSomos(View view){
+//		startActivity(new Intent(this, ConsultaFormaPagamento.class));
+//	}
 	
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {
@@ -193,45 +208,40 @@ public class FinancasPessoais extends Activity {
         Fragment fragment = null;
         switch (position) {
         case 1:
-            fragment = new HomeFragment();
+            fragment = new RelatorioFinanceiroFragment();
             break;
         case 2:
-            fragment = new CategoriaFragment();
-            break;
-        case 3:
         	fragment = new ConsultaCagetoriaFragment();
         	break;  
-        case 4:
-        	fragment = new PagamentoFragment();
-        	break;
-        case 5:
+        case 3:
         	fragment = new ConsultaPagamentoFragment();
         	break;
-        case 6:
+        case 4:
         	fragment = new FiltroRelatFinanceiroFragment();
         	break;
         	
         default:
-        	//si no esta la opcion mostrara un toast y nos mandara a Home
-        	Toast.makeText(getApplicationContext(),"Opcion "+titulos[position-1]+"no disponible!", Toast.LENGTH_SHORT).show();
-            fragment = new HomeFragment();
-            position=1;
+        	//Mostra mensagem e retorna para position 1
+        	Toast.makeText(getApplicationContext(),"Opção "+titulos[position-1]+" não disponivel!", Toast.LENGTH_SHORT).show();
+            fragment = new FiltroRelatFinanceiroFragment();
+            position=4;
             break;
         }
-        //Validamos si el fragment no es nulo
+        //Valida se o fragment é nulo
         if (fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
  
-            // Actualizamos el contenido segun la opcion elegida
+            // Actualiza o conteudo segundo a opção escolhida
             NavList.setItemChecked(position, true);
             NavList.setSelection(position);
-            //Cambiamos el titulo en donde decia "
+            
+            //Muda o titulo
             setTitle(titulos[position-1]);
-            //Cerramos el menu deslizable
+            //Fecha o menu deslizante
             NavDrawerLayout.closeDrawer(NavList);
         } else {
-            //Si el fragment es nulo mostramos un mensaje de error.
+            //Se o fragment é nulo mostra uma mensagem de erro.
             Log.e("Error  ", "MostrarFragment"+position);
         }
     }
@@ -258,6 +268,14 @@ public class FinancasPessoais extends Activity {
         // Handle your other action bar items...
         return super.onOptionsItemSelected(item);
     }
+
+	public Intent getIntent() {
+		return intent;
+	}
+
+	public void setIntent(Intent intent) {
+		this.intent = intent;
+	}
 
 	
 }

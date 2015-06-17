@@ -168,12 +168,11 @@
         android:text="" />
 
     <Button
-        android:id="@+id/imageView1"
+        android:id="@+id/btn_buscarRelat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
         android:background="@drawable/button"
-        android:onClick="buscarRelat"
         android:layout_gravity="center_horizontal"
         android:text="Buscar" />
     
