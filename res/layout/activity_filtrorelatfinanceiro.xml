@@ -73,7 +73,6 @@
                 android:layout_margin="1dp"
                 android:layout_weight="0.5"
                 android:background="@drawable/button"
-                android:onClick="selecionarDataini"
                 android:text="" />
 
             <Button
@@ -83,7 +82,6 @@
                 android:layout_margin="1dp"
                 android:layout_weight="0.5"
                 android:background="@drawable/button"
-                android:onClick="selecionarDatafim"
                 android:text="" />
 
         </TableRow>
@@ -110,7 +108,7 @@
     </Spinner>
     
         <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
