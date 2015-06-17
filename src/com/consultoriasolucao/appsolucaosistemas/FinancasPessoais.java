@@ -127,7 +127,7 @@ public class FinancasPessoais extends Activity {
         });
         
         //Cuando la aplicacion cargue por defecto mostrar la opcion Home
-        MostrarFragment(4);
+        MostrarFragment(1);
         
         
 		
@@ -223,8 +223,8 @@ public class FinancasPessoais extends Activity {
         default:
         	//Mostra mensagem e retorna para position 1
         	Toast.makeText(getApplicationContext(),"Opção "+titulos[position-1]+" não disponivel!", Toast.LENGTH_SHORT).show();
-            fragment = new FiltroRelatFinanceiroFragment();
-            position=4;
+            fragment = new RelatorioFinanceiroFragment();
+            position=1;
             break;
         }
         //Valida se o fragment é nulo

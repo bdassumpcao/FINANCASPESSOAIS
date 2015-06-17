@@ -517,22 +517,22 @@ public class LancaDespesaFragment extends Fragment {
 //		return true;
 //	}
 	
-	@Override
-	public void onResume(){
-		super.onResume();
-		carregaSpinnerCategoria();
-		new Handler().postDelayed(new Runnable() {        
-		    public void run() {
-		    	categoria.setSelection(cat_position, true);
-		    }
-		  }, 100);
-		
-		carregaSpinnerPagamento();
-		new Handler().postDelayed(new Runnable() {        
-		    public void run() {
-		    	pagamento.setSelection(pag_position, true);
-		    }
-		  }, 100);
-	}
+//	@Override
+//	public void onResume(){
+//		super.onResume();
+//		carregaSpinnerCategoria();
+//		new Handler().postDelayed(new Runnable() {        
+//		    public void run() {
+//		    	categoria.setSelection(cat_position, true);
+//		    }
+//		  }, 100);
+//		
+//		carregaSpinnerPagamento();
+//		new Handler().postDelayed(new Runnable() {        
+//		    public void run() {
+//		    	pagamento.setSelection(pag_position, true);
+//		    }
+//		  }, 100);
+//	}
 
 }
